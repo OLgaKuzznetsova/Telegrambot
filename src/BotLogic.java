@@ -1,24 +1,19 @@
-
-
-import java.util.Random;
-import java.util.Scanner;
-
 public class BotLogic {
     private int[] states = new int[]{-1};
     //private String userInput;
-    private Data data = new Data();
-    private String[] words = data.getWords();
-    private String[] definition = data.getDefinitions();
+    private Information information = new Information();
+    private String[] words = information.getWords();
+    private String[] definition = information.getDefinitions();
     private int counter = 0;
 
     public String handleUserInput(int chatId, String userInput) {
         if (states[0] == -1) {
             states[0] = 0;
-            return data.getMainMenu();
+            return information.getMainMenu();
         }
         if (userInput.equalsIgnoreCase("Определения")) {
             states[0] = 1;
-            return data.getMenu1();
+            return information.getMenu1();
         }
         //if (userInput.equalsIgnoreCase("Тест")) {
         //states[0] = 2;
@@ -26,7 +21,7 @@ public class BotLogic {
         //}
         if (userInput.equalsIgnoreCase("Меню")) {
             states[0] = 0;
-            return data.getMenu();
+            return information.getMenu();
         }
         if (states[0] == 1)
             return optionOne(userInput);
