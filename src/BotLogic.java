@@ -1,4 +1,4 @@
-package com.company;
+
 
 import java.util.Random;
 import java.util.Scanner;
@@ -21,8 +21,8 @@ public class BotLogic {
             return data.getMenu1();
         }
         //if (userInput.equalsIgnoreCase("Тест")) {
-            //states[0] = 2;
-            //return data.getMenu2();
+        //states[0] = 2;
+        //return data.getMenu2();
         //}
         if (userInput.equalsIgnoreCase("Меню")) {
             states[0] = 0;
@@ -31,7 +31,7 @@ public class BotLogic {
         if (states[0] == 1)
             return optionOne(userInput);
         //if (states[0] == 2)
-            //return optionTwo(userInput);
+        //return optionTwo(userInput);
 
         return "Данные введены неверно";
     }

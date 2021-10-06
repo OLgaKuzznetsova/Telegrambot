@@ -1,4 +1,3 @@
-package com.company;
 
 public class Data {
     private String mainMenu = "Вас приветствует бот по подготовке к экзамену по математике. \n" +
