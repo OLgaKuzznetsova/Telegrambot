@@ -39,7 +39,7 @@ public class BotLogic {
         }
         return "Нет такого определения.";
     }
-//fjfjfjfjfjff
+//fjfjfjfjfj
     /*public String optionTwo(String userInput) {
         String answer = "";
         if (states[1] == 0) {
