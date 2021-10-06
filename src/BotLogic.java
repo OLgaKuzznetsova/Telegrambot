@@ -1,11 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BotLogic {
-    private int[] states = new int[]{-1};
+
+    private DialogStates dialogStates = new DialogStates();
+    //private int state = DialogStates.States.MENU;
+    private int[] states = new int[]{};
     //private String userInput;
     private Information information = new Information();
     private ArrayList<Data> data = information.getData();
     private int counter = 0;
+    public HashMap<Integer, int[]> dictionary = new HashMap<>();
 
     public String handleUserInput(int chatId, String userInput) {
         if (states[0] == -1) {

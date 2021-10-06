@@ -3,10 +3,8 @@ import java.util.ArrayList;
 public class Information {
     private String mainMenu = "Вас приветствует бот по подготовке к экзамену по математике. \n" +
             "Он поможет вам выучить определения.\n";
-    private Data classData;
     private ArrayList<Data> data = new ArrayList<Data>();
-
-    private void createData() {
+    public void Information() {
         addData("Булеан", "множество всех подмножеств данного множества.");
         addData("Биекция", "функция, которая инъективна и сюръективна.");
         addData("Разбиение", "представление множества в виде объединения произвольного количества попарно непересекающихся подмножеств.");
@@ -17,6 +15,7 @@ public class Information {
     }
 
     private void addData(String term, String definition) {
+        Data classData = new Data();
         classData.setValues(term, definition);
         data.add(classData);
     }
@@ -37,6 +36,10 @@ public class Information {
         return message;
     }
 
+    public ArrayList<Data> getData() {
+        Information();
+        return data;
+    }
     public String getMainMenu() {
         return mainMenu + menu;
     }
@@ -53,9 +56,7 @@ public class Information {
         return menu2;
     }
 
-    public ArrayList<Data> getData() {
-        return data;
-    }
+
 }
 /*private String mainMenu = "Вас приветствует бот по подготовке к экзамену. \n" +
             "У бота есть 2 режима.\n" +
