@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class BotLogic {
 
     private DialogStates dialogStates = new DialogStates();
-    //private int state = DialogStates.States.MENU;
+
     private int[] states = new int[]{};
     //private String userInput;
     private Information information = new Information();
@@ -13,26 +13,30 @@ public class BotLogic {
     public HashMap<Integer, int[]> dictionary = new HashMap<>();
 
     public String handleUserInput(int chatId, String userInput) {
-        if (states[0] == -1) {
-            states[0] = 0;
-            return information.getMainMenu();
+        if (!dialogStates.containsChatId(chatId)){
+            dialogStates.addChatId(chatId);
         }
+//        if (states[0] == -1) {
+//            states[0] = 0;
+//            return information.getMainMenu();
+//        }
         if (userInput.equalsIgnoreCase("Определения")) {
-            states[0] = 1;
+            dialogStates.changeState(chatId, DialogStates.States.LEARNING);
             return information.getMenu1();
         }
-        //if (userInput.equalsIgnoreCase("Тест")) {
-        //states[0] = 2;
-        //return data.getMenu2();
-        //}
+        if (userInput.equalsIgnoreCase("Тест")) {
+            dialogStates.changeState(chatId, DialogStates.States.TEST);
+            return information.getMenu2();
+        }
         if (userInput.equalsIgnoreCase("Меню")) {
-            states[0] = 0;
+            dialogStates.changeState(chatId, DialogStates.States.MENU);
             return information.getMenu();
         }
-        if (states[0] == 1)
+        if (dialogStates.getState(chatId) == DialogStates.States.LEARNING)
             return optionOne(userInput);
-        //if (states[0] == 2)
-        //return optionTwo(userInput);
+
+//        if (dialogStates.getState(chatId) == DialogStates.States.TEST)
+//            return optionTwo(userInput);
 
         return "Данные введены неверно";
     }
@@ -45,28 +49,28 @@ public class BotLogic {
         }
         return "Нет такого определения.";
     }
-//fjfjfjfjfj
-    /*public String optionTwo(String userInput) {
-        String answer = "";
-        if (states[1] == 0) {
-            states[1] = 1;
-            answer = words[counter];
-            return definition[counter] + "\n";
-        }
-        if (states[1] == 1) {
-            states[1] = 0;
-            if (words.length - 1 == counter) {
-                counter = 0;
-            } else {
-                counter++;
-            }
-            if (userInput.equalsIgnoreCase(answer)) {
-                return "Правильный ответ";
-            } else {
-                return ("Неправильный ответ! Правильный ответ - " + answer);
 
-            }
-        }
-        return "";
-    }*/
+//    public String optionTwo(String userInput) {
+//        String answer = "";
+//        if (states[1] == 0) {
+//            states[1] = 1;
+//            answer = words[counter];
+//            return definition[counter] + "\n";
+//        }
+//        if (states[1] == 1) {
+//            states[1] = 0;
+//            if (words.length - 1 == counter) {
+//                counter = 0;
+//            } else {
+//                counter++;
+//            }
+//            if (userInput.equalsIgnoreCase(answer)) {
+//                return "Правильный ответ";
+//            } else {
+//                return ("Неправильный ответ! Правильный ответ - " + answer);
+//
+//            }
+//        }
+//        return "";
+//    }
 }

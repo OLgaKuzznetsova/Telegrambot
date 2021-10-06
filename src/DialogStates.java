@@ -16,9 +16,31 @@ public class DialogStates {
         States(int value) {
             this.value = value;
         }
+
+        public int getValue() {
+            return value;
+        }
     }
-    private int chatId = 0;
-    public HashMap<Integer, int[]> dictionary = new HashMap<>();
+
+
+    private Map<Integer, States> dictionary = new HashMap<>() {
+    };
+
+    public void addChatId(int chatId) {
+        dictionary.put(chatId, States.MENU);
+    }
+
+    public void changeState(int chatId, States state) {
+        dictionary.replace(chatId, state);
+    }
+
+    public States getState(int chatId) {
+        return dictionary.get(chatId);
+    }
+
+    public boolean containsChatId(int chatId) {
+        return dictionary.containsKey(chatId);
+    }
 
 
 }
