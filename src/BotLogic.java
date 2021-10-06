@@ -1,9 +1,10 @@
+import java.util.ArrayList;
+
 public class BotLogic {
     private int[] states = new int[]{-1};
     //private String userInput;
     private Information information = new Information();
-    private String[] words = information.getWords();
-    private String[] definition = information.getDefinitions();
+    private ArrayList<Data> data = information.getData();
     private int counter = 0;
 
     public String handleUserInput(int chatId, String userInput) {
@@ -32,9 +33,9 @@ public class BotLogic {
     }
 
     public String optionOne(String userInput) {
-        for (int i = 0; i < words.length; i++) {
-            if (userInput.equalsIgnoreCase(words[i])) {
-                return words[i] + "-" + definition[i];
+        for (int i = 0; i < data.size(); i++) {
+            if (userInput.equalsIgnoreCase(data.get(i).getTerm())) {
+                return data.get(i).getTerm() + "-" + data.get(i).getDefinition();
             }
         }
         return "Нет такого определения.";
