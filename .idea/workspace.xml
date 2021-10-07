@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BotLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BotLogic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DialogStates$States.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DialogStates$States.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DialogStates.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DialogStates.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Information.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Information.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +59,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1633597686134</updated>
-      <workItem from="1633597688495" duration="6040000" />
+      <workItem from="1633597688495" duration="6825000" />
     </task>
     <servers />
   </component>
