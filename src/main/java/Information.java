@@ -3,7 +3,9 @@ import java.util.ArrayList;
 public class Information {
     private String mainMenu = "Вас приветствует бот по подготовке к экзамену по математике. \n" +
             "Он поможет вам выучить определения.\n";
-    private ArrayList<Data> data = new ArrayList<Data>();
+
+    private ArrayList<Data> data = new ArrayList<>();
+
     public void Information() {
         addData("Булеан", "множество всех подмножеств данного множества.");
         addData("Биекция", "функция, которая инъективна и сюръективна.");
@@ -27,7 +29,6 @@ public class Information {
 
     private String menu2 = "Сейчас Вам будет показано определение.\n" +
             "Напишите понятие, к которому оно относится.";
-
 
     private StringBuilder menu1() {
         var message = new StringBuilder("Введите понятие, определение которого вы хотите узнать\n");
@@ -56,11 +57,4 @@ public class Information {
     public String getMenu2() {
         return menu2;
     }
-
-
 }
-/*private String mainMenu = "Вас приветствует бот по подготовке к экзамену. \n" +
-            "У бота есть 2 режима.\n" +
-            "В первом режиме вы можете посмотреть опеределения понятий. А во втором проверить, как хорошо вы их выучили. \n";*/
-
-//"Тест - если во второй \n" +

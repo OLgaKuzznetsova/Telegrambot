@@ -5,8 +5,6 @@ import java.util.Map;
 
 public class DialogStates {
     public enum States {
-        CURRENT(0),
-        QUESTION(1),
         MENU(2),
         LEARNING(3),
         TEST(4);
@@ -21,7 +19,6 @@ public class DialogStates {
             return value;
         }
     }
-
 
     private Map<String, States> dictionary = new HashMap<>();
     private Map<String, Integer> questions = new HashMap<>();

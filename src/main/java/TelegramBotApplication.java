@@ -1,12 +1,13 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 
 public class TelegramBotApplication extends TelegramLongPollingBot {
     private BotLogic bot;
-    public TelegramBotApplication(BotLogic bot)
-    {
+    private Information information = new Information();
+
+    public TelegramBotApplication(BotLogic bot) {
         this.bot = bot;
     }
 
@@ -23,39 +24,26 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
-        try
-        {
-            if (!update.hasMessage())
-            {
+        try {
+            if (!update.hasMessage()) {
                 return;
             }
 
             var message = update.getMessage();
             var currentChatId = message.getChatId().toString();
-            var response = bot.handleUserInput(currentChatId, message.toString());
+            if (update.getMessage().getText().equals("/start")) {
+                execute(new SendMessage(currentChatId, information.getMainMenu()));
+            } else {
+                var response = bot.handleUserInput(currentChatId, message.getText());
+                execute(new SendMessage(currentChatId, response));
+            }
 
-
-            sendResponse(currentChatId, response);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    private void sendResponse(String chatId, String msgText)
-    {
-        var sender = new SendMessage();
-        sender.setChatId(chatId);
-        sender.setText(msgText);
 
-        try
-        {
-            execute(sender);
-        } catch (TelegramApiException e)
-        {
-            e.printStackTrace();
-        }
-    }
 }
 
 
