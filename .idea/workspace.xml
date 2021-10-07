@@ -5,46 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Data.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DialogStates.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Information.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Telegrambot/BotLogic.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Telegrambot/Data.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Telegrambot/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BotLogic.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Data.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DialogStates.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Information.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Telegrambot.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/BotLogic.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Data.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/DialogStates$States.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/DialogStates.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Information.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Telegrambot.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DialogStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DialogStates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +65,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1633597686134</updated>
-      <workItem from="1633597688495" duration="388000" />
+      <workItem from="1633597688495" duration="3548000" />
     </task>
     <servers />
   </component>

@@ -12,7 +12,7 @@ public class BotLogic {
     private int counter = 0;
     public HashMap<Integer, int[]> dictionary = new HashMap<>();
 
-    public String handleUserInput(int chatId, String userInput) {
+    public String handleUserInput(String chatId, String userInput) {
         if (!dialogStates.containsChatId(chatId)){
             dialogStates.addChatId(chatId);
         }
@@ -50,7 +50,7 @@ public class BotLogic {
         return "Нет такого определения.";
     }
 
-    public String optionTwo(String userInput, int chatId) {
+    public String optionTwo(String userInput, String chatId) {
         String answer = data.get(dialogStates.getQuestion(chatId)).getTerm();
         String question = data.get(dialogStates.getQuestion(chatId)).getDefinition();
         if (userInput.equalsIgnoreCase(answer)){
