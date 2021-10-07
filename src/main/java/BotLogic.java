@@ -16,7 +16,8 @@ public class BotLogic {
         }
         if (userInput.equalsIgnoreCase("Тест")) {
             dialogStates.changeState(chatId, DialogStates.States.TEST);
-            return information.getMenu2() + "\n" + "\n" + data.get(dialogStates.getQuestion(chatId)).getDefinition();
+            return information.getMenu2() + "\n" + "\n" + data.get(dialogStates.getQuestion(chatId)).getDefinition().substring(0,1).toUpperCase()
+                    + data.get(dialogStates.getQuestion(chatId)).getDefinition().substring(1);
         }
         if (userInput.equalsIgnoreCase("Меню")) {
             dialogStates.changeState(chatId, DialogStates.States.MENU);
