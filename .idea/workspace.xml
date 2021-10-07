@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Data.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DialogStates.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Information.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Telegrambot/BotLogic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Telegrambot/Data.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Telegrambot/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BotLogic.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DialogStates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Information.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Telegrambot.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/BotLogic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Data.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/DialogStates$States.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/DialogStates.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Information.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/out/production/Telegrambot/Telegrambot.iml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1zAjFLVrstqls8HjdSGmY7IbfGj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Telegrambot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="" />
+      <created>1633597686134</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633597686134</updated>
+      <workItem from="1633597688495" duration="388000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
