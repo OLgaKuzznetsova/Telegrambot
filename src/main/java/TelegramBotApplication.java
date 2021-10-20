@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class TelegramBotApplication extends TelegramLongPollingBot {
     private BotLogic bot;
-    private Information information = new Information();
+    private TermRepository termRepository = new TermRepository();
 
     public TelegramBotApplication(BotLogic bot) {
         this.bot = bot;
@@ -31,12 +31,10 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
 
             var message = update.getMessage();
             var currentChatId = message.getChatId().toString();
-            if (update.getMessage().getText().equals("/start")) {
-                execute(new SendMessage(currentChatId, information.getMainMenu()));
-            } else {
-                var response = bot.handleUserInput(currentChatId, message.getText());
-                execute(new SendMessage(currentChatId, response));
-            }
+
+            var response = bot.handleUserInput(currentChatId, message.getText());
+            execute(new SendMessage(currentChatId, response));
+
 
         } catch (Exception e) {
             e.printStackTrace();

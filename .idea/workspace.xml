@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DialogStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DialogStates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Information.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TermRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +65,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1633597686134</updated>
-      <workItem from="1633597688495" duration="6825000" />
+      <workItem from="1633597688495" duration="7427000" />
+      <workItem from="1634729391757" duration="6000" />
+      <workItem from="1634729422220" duration="3079000" />
     </task>
     <servers />
   </component>
@@ -76,5 +84,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -2,37 +2,39 @@ import java.util.ArrayList;
 
 public class BotLogic {
     private DialogStates dialogStates = new DialogStates();
-    private int[] states = new int[]{};
-    private Information information = new Information();
-    private ArrayList<Data> data = information.getData();
+    private TermRepository termRepository = new TermRepository();
+    private ArrayList<Data> data = termRepository.getData();
 
     public String handleUserInput(String chatId, String userInput) {
+        if (userInput.equals("/start")) {
+            return mainMenu();
+        }
         if (!dialogStates.containsChatId(chatId)) {
             dialogStates.addChatId(chatId);
         }
         if (userInput.equalsIgnoreCase("Определения")) {
-            dialogStates.changeState(chatId, DialogStates.States.LEARNING);
-            return information.getMenu1();
+            dialogStates.changeState(chatId, DialogStates.State.LEARNING);
+            return menuForDisplayingDefinitions();
         }
         if (userInput.equalsIgnoreCase("Тест")) {
-            dialogStates.changeState(chatId, DialogStates.States.TEST);
-            return information.getMenu2() + "\n" + "\n" + data.get(dialogStates.getQuestion(chatId)).getDefinition().substring(0,1).toUpperCase()
+            dialogStates.changeState(chatId, DialogStates.State.TEST);
+            return menuForDefiningTerms + "\n" + "\n" + data.get(dialogStates.getQuestion(chatId)).getDefinition().substring(0, 1).toUpperCase()
                     + data.get(dialogStates.getQuestion(chatId)).getDefinition().substring(1);
         }
         if (userInput.equalsIgnoreCase("Меню")) {
-            dialogStates.changeState(chatId, DialogStates.States.MENU);
-            return information.getMenu();
+            dialogStates.changeState(chatId, DialogStates.State.MENU);
+            return menuToSelectTheMode;
         }
-        if (dialogStates.getState(chatId) == DialogStates.States.LEARNING)
-            return optionOne(userInput);
+        if (dialogStates.getState(chatId) == DialogStates.State.LEARNING)
+            return modeForDefiningTerms(userInput);
 
-        if (dialogStates.getState(chatId) == DialogStates.States.TEST)
-            return optionTwo(userInput, chatId);
+        if (dialogStates.getState(chatId) == DialogStates.State.TEST)
+            return modeForCheckingTheEnteredTerm(userInput, chatId);
 
         return "Данные введены неверно";
     }
 
-    public String optionOne(String userInput) {
+    private String modeForDefiningTerms(String userInput) {
         for (int i = 0; i < data.size(); i++) {
             if (userInput.equalsIgnoreCase(data.get(i).getTerm())) {
                 return data.get(i).getTerm() + " - " + data.get(i).getDefinition();
@@ -41,23 +43,45 @@ public class BotLogic {
         return "Нет такого определения.";
     }
 
-    public String optionTwo(String userInput, String chatId) {
+    private String modeForCheckingTheEnteredTerm(String userInput, String chatId) {
         String answer = data.get(dialogStates.getQuestion(chatId)).getTerm();
 
         if (userInput.equalsIgnoreCase(answer)) {
-            if (dialogStates.getQuestion(chatId) == data.size() - 1)
-                dialogStates.changeQuestion(chatId, 0);
-            else
-                dialogStates.changeQuestion(chatId, dialogStates.getQuestion(chatId) + 1);
-            return "Правильный ответ \n" + "\nСледующее определение:" + data.get(dialogStates.getQuestion(chatId)).getDefinition();
+            updateQuestionNumber(chatId);
+            return "Правильный ответ \n" + "\nСледующее определение: " + data.get(dialogStates.getQuestion(chatId)).getDefinition();
         } else {
-            if (dialogStates.getQuestion(chatId) == data.size() - 1)
-                dialogStates.changeQuestion(chatId, 0);
-            else
-                dialogStates.changeQuestion(chatId, dialogStates.getQuestion(chatId) + 1);
+            updateQuestionNumber(chatId);
             return ("Неправильный ответ! \nПравильный ответ: " + answer + "\n"
                     + "\n Следующее определение: " + data.get(dialogStates.getQuestion(chatId)).getDefinition());
         }
 
+    }
+    private void updateQuestionNumber(String chatId)
+    {
+        if (dialogStates.getQuestion(chatId) == data.size() - 1)
+            dialogStates.changeQuestion(chatId, 0);
+        else
+            dialogStates.changeQuestion(chatId, dialogStates.getQuestion(chatId) + 1);
+    }
+
+    private String menuForBotDescription = "Вас приветствует бот по подготовке к экзамену по математике. \n" +
+            "Он поможет вам выучить определения.\n";
+
+    private String menuToSelectTheMode = "Отправьте:\n" +
+            "Определения - если хотите выучить определения \n" +
+            "Тест - если во второй \n" +
+            "Меню - если хотите вернуться обратно в меню\n";
+
+    private String menuForDefiningTerms = "Сейчас Вам будет показано определение.\n" +
+            "Напишите понятие, к которому оно относится.";
+
+    private String mainMenu() { return menuForBotDescription + menuToSelectTheMode; }
+
+    private String menuForDisplayingDefinitions() {
+        var message = new StringBuilder("Введите понятие, определение которого вы хотите узнать\n");
+        for (int i = 0; i < data.size(); i++) {
+            message.append(data.get(i).getTerm() + "\n");
+        }
+        return message.toString();
     }
 }
