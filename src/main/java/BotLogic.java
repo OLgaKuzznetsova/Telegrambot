@@ -69,7 +69,7 @@ public class BotLogic {
 
     private String menuToSelectTheMode = "Отправьте:\n" +
             "Определения - если хотите выучить определения \n" +
-            "Тест - если во второй \n" +
+            "Тест - если хотите пройти тест \n" +
             "Меню - если хотите вернуться обратно в меню\n";
 
     private String menuForDefiningTerms = "Сейчас Вам будет показано определение.\n" +
