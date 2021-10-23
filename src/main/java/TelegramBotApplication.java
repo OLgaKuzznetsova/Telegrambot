@@ -13,7 +13,7 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "MathTestingBot";
+        return System.getenv("BOT_USERNAME");
     }
 
     @Override
