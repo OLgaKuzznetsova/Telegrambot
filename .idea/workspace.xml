@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GoogleAuthorizeUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GoogleSheet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/SheetsServiceUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/credentials.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GoogleAuthorizeUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GoogleSheet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/SheetsServiceUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/credentials.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BotLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BotLogic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +48,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="advanced.settings" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">

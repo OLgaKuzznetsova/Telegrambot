@@ -2,8 +2,11 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GeneralSecurityException, IOException {
         var botLogic = new BotLogic();
         var telegramBot = new TelegramBotApplication(botLogic);
 
@@ -13,5 +16,10 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+        var ex = new Exel();
+        System.out.println(ex.readFromExcel());
+
+
     }
+
 }
