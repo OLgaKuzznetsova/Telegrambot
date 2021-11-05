@@ -19,7 +19,7 @@ public class Main {
         var ex = new Exel();
         System.out.println(ex.readFromExcel());
         var a = new ErrorSearch();
-        System.out.println(a.getTheNumberOfTermMismatches("Форм"));
+        System.out.println(a.getTheNumberOfTermMismatches("Виктор"));
 
 
 

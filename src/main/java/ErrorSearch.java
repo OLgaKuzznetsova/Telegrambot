@@ -6,7 +6,8 @@ import java.util.Map;
 public class ErrorSearch {
     private TermRepository termRepository = new TermRepository();
     private ArrayList<TermDefinition> data = termRepository.getData();
-    public  int calculate(String userInput, String term) {
+
+    public int calculate(String userInput, String term) {
         int[][] dp = new int[userInput.length() + 1][term.length() + 1];
 
         for (int i = 0; i <= userInput.length(); i++) {
@@ -26,19 +27,21 @@ public class ErrorSearch {
         return dp[userInput.length()][term.length()];
     }
 
-    private int min(int number1, int number2, int number3){
+    private int min(int number1, int number2, int number3) {
         int[] numbers = new int[]{number1, number2, number3};
-        return Arrays.stream(numbers).min().orElse(Integer.MAX_VALUE);}
+        return Arrays.stream(numbers).min().orElse(Integer.MAX_VALUE);
+    }
 
     private int costOfSubstitution(char a, char b) {
         return a == b ? 0 : 1;
     }
-    public Map<Integer, String> getTheNumberOfTermMismatches(String userInput){
-        Map<Integer, String> a = new HashMap<>();
-        for (var i = 0; i<data.size(); i++){
-            a.put(calculate(userInput, data.get(i).getTerm()), data.get(i).getTerm());
+
+    public Map<Integer, String> getTheNumberOfTermMismatches(String userInput) {
+        Map<Integer, String> numberOfTermMismatches = new HashMap<>();
+        for (var i = 0; i < data.size(); i++) {
+            numberOfTermMismatches.put(calculate(userInput, data.get(i).getTerm()), data.get(i).getTerm());
         }
-        return a;
+        return numberOfTermMismatches;
 
     }
 }
