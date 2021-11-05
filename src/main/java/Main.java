@@ -19,9 +19,8 @@ public class Main {
         var ex = new Exel();
         System.out.println(ex.readFromExcel());
         var a = new ErrorSearch();
-        System.out.println(a.calculate("он", "она"));
-        System.out.println(a.calculate("оне", "она"));
-        System.out.println(a.calculate("онаа", "она"));
+        System.out.println(a.getTheNumberOfTermMismatches("Форм"));
+
 
 
     }

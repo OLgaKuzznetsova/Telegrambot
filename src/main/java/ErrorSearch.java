@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ErrorSearch {
     private TermRepository termRepository = new TermRepository();
@@ -24,11 +26,19 @@ public class ErrorSearch {
         return dp[userInput.length()][term.length()];
     }
 
-    public static int min(int number1, int number2, int number3){
+    private int min(int number1, int number2, int number3){
         int[] numbers = new int[]{number1, number2, number3};
         return Arrays.stream(numbers).min().orElse(Integer.MAX_VALUE);}
 
-    public static int costOfSubstitution(char a, char b) {
+    private int costOfSubstitution(char a, char b) {
         return a == b ? 0 : 1;
+    }
+    public Map<Integer, String> getTheNumberOfTermMismatches(String userInput){
+        Map<Integer, String> a = new HashMap<>();
+        for (var i = 0; i<data.size(); i++){
+            a.put(calculate(userInput, data.get(i).getTerm()), data.get(i).getTerm());
+        }
+        return a;
+
     }
 }
