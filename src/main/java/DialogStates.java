@@ -8,32 +8,32 @@ public class DialogStates {
         TEST()
     }
 
-    private Map<String, State> lastQuestionIndexByChatId = new HashMap<>();
-    private Map<String, Integer> stateByChatId = new HashMap<>();
+    private Map<String, State> stateByChatId = new HashMap<>();
+    private Map<String, Integer> lastQuestionIndexByChatId = new HashMap<>();
 
     public void addChatId(String chatId) {
-        lastQuestionIndexByChatId.put(chatId, State.MENU);
-        stateByChatId.put(chatId, 0);
+        stateByChatId.put(chatId, State.MENU);
+        lastQuestionIndexByChatId.put(chatId, 0);
     }
 
     public void changeState(String chatId, State state) {
-        lastQuestionIndexByChatId.replace(chatId, state);
+        stateByChatId.replace(chatId, state);
     }
 
     public void changeQuestion(String chatId, int number) {
-        stateByChatId.replace(chatId, number);
+        lastQuestionIndexByChatId.replace(chatId, number);
     }
 
     public int getQuestion(String chatId) {
-        return stateByChatId.get(chatId);
-    }
-
-    public State getState(String chatId) {
         return lastQuestionIndexByChatId.get(chatId);
     }
 
+    public State getState(String chatId) {
+        return stateByChatId.get(chatId);
+    }
+
     public boolean containsChatId(String chatId) {
-        return lastQuestionIndexByChatId.containsKey(chatId);
+        return stateByChatId.containsKey(chatId);
     }
 
 
