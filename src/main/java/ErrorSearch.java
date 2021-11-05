@@ -36,10 +36,10 @@ public class ErrorSearch {
         return a == b ? 0 : 1;
     }
 
-    public Map<Integer, String> getTheNumberOfTermMismatches(String userInput) {
-        Map<Integer, String> numberOfTermMismatches = new HashMap<>();
+    public Map<String, Integer> getTheNumberOfTermMismatches(String userInput) {
+        Map<String, Integer> numberOfTermMismatches = new HashMap<>();
         for (var i = 0; i < data.size(); i++) {
-            numberOfTermMismatches.put(calculate(userInput, data.get(i).getTerm()), data.get(i).getTerm());
+            numberOfTermMismatches.put(data.get(i).getTerm(), calculate(userInput, data.get(i).getTerm()));
         }
         return numberOfTermMismatches;
 
