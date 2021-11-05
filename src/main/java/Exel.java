@@ -8,13 +8,12 @@ import java.io.IOException;
 
 public class Exel {
     public static String readFromExcel() throws IOException {
-        String fileName = ""; //твой имя файла
-        // "C:\\Users\\user\\Desktop\\ООП\\Telegrambot\\data.xlsx"
+        String fileName = "C:\\Users\\user\\Desktop\\ООП\\Telegrambot\\data.xlsx"; //твоё имя файла
         XSSFWorkbook myExcelBook = new XSSFWorkbook(new FileInputStream(fileName));
         XSSFSheet myExcelSheet = myExcelBook.getSheet("data");
-        XSSFRow row = myExcelSheet.getRow(0);
-        if(row.getCell(0).getCellType() == XSSFCell.CELL_TYPE_STRING) {
-            String name = row.getCell(0).getStringCellValue();
+        XSSFRow row = myExcelSheet.getRow(1);
+        if(row.getCell(1).getCellType() == XSSFCell.CELL_TYPE_STRING) {
+            String name = row.getCell(1).getStringCellValue();
             System.out.println("ячейка A1 : " + name);
         }
         return "";

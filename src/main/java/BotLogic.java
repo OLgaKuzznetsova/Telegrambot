@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class BotLogic {
     private DialogStates dialogStates = new DialogStates();
     private TermRepository termRepository = new TermRepository();
-    private ArrayList<Data> data = termRepository.getData();
+    private ArrayList<TermDefinition> data = termRepository.getData();
 
     public String handleUserInput(String chatId, String userInput) {
         if (userInput.equals("/start")) {
@@ -18,8 +18,7 @@ public class BotLogic {
         }
         if (userInput.equalsIgnoreCase("Тест")) {
             dialogStates.changeState(chatId, DialogStates.State.TEST);
-            return menuForDefiningTerms + "\n" + "\n" + data.get(dialogStates.getQuestion(chatId)).getDefinition().substring(0, 1).toUpperCase()
-                    + data.get(dialogStates.getQuestion(chatId)).getDefinition().substring(1);
+            return menuForDefiningTerms + "\n" + "\n" + data.get(dialogStates.getQuestion(chatId)).getDefinition(true);
         }
         if (userInput.equalsIgnoreCase("Меню")) {
             dialogStates.changeState(chatId, DialogStates.State.MENU);
@@ -37,7 +36,7 @@ public class BotLogic {
     private String modeForDefiningTerms(String userInput) {
         for (int i = 0; i < data.size(); i++) {
             if (userInput.equalsIgnoreCase(data.get(i).getTerm())) {
-                return data.get(i).getTerm() + " - " + data.get(i).getDefinition();
+                return data.get(i).getTerm() + " - " + data.get(i).getDefinition(false);
             }
         }
         return "Нет такого определения.";
@@ -48,11 +47,11 @@ public class BotLogic {
 
         if (userInput.equalsIgnoreCase(answer)) {
             updateQuestionNumber(chatId);
-            return "Правильный ответ \n" + "\nСледующее определение: " + data.get(dialogStates.getQuestion(chatId)).getDefinition();
+            return "Правильный ответ \n" + "\nСледующее определение: " + data.get(dialogStates.getQuestion(chatId)).getDefinition(false);
         } else {
             updateQuestionNumber(chatId);
             return ("Неправильный ответ! \nПравильный ответ: " + answer + "\n"
-                    + "\n Следующее определение: " + data.get(dialogStates.getQuestion(chatId)).getDefinition());
+                    + "\n Следующее определение: " + data.get(dialogStates.getQuestion(chatId)).getDefinition(false));
         }
 
     }

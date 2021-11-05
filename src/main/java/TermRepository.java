@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class TermRepository {
-    private ArrayList<Data> data = new ArrayList<>();
+    private ArrayList<TermDefinition> data = new ArrayList<>();
 
-    private void Information() {
+    public TermRepository() {
         addData("Булеан", "множество всех подмножеств данного множества.");
         addData("Биекция", "функция, которая инъективна и сюръективна.");
         addData("Разбиение", "представление множества в виде объединения произвольного количества попарно непересекающихся подмножеств.");
@@ -14,13 +14,12 @@ public class TermRepository {
     }
 
     private void addData(String term, String definition) {
-        Data classData = new Data();
-        classData.setValues(term, definition);
-        data.add(classData);
+        TermDefinition classTermDefinition = new TermDefinition();
+        classTermDefinition.setValues(term, definition);
+        data.add(classTermDefinition);
     }
 
-    public ArrayList<Data> getData() {
-        Information();
+    public ArrayList<TermDefinition> getData() {
         return data;
     }
 
