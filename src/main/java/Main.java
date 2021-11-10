@@ -4,6 +4,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws GeneralSecurityException, IOException {
@@ -16,6 +17,10 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
+        GoogleSheetsRepo a = new GoogleSheetsRepo();
+        ArrayList<String[]> d = a.GoogleSheetsRepo();
+        System.out.println(d);
 
     }
 
