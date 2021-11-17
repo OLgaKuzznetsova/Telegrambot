@@ -31,7 +31,6 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
 
             var message = update.getMessage();
             var currentChatId = message.getChatId().toString();
-
             var response = bot.handleUserInput(currentChatId, message.getText());
             execute(new SendMessage(currentChatId, response));
 
