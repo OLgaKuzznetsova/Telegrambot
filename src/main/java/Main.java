@@ -4,6 +4,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws GeneralSecurityException, IOException {
@@ -16,12 +17,15 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-        var e = new GoogleSheet();
-        e.getInformation();
+
+
         //var a = new ErrorSearch();
         //System.out.println(a.getTheNumberOfTermMismatches("Виктор"));
 
 
+
+        GoogleSheetsRepo a = new GoogleSheetsRepo();
+        System.out.println(a.GoogleSheetsRepo());
 
     }
 
