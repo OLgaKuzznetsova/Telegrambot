@@ -15,7 +15,7 @@ public class GoogleSheet {
 
     public void getInformation() throws IOException, GeneralSecurityException{
         sheetsService = SheetsServiceUtil.getSheetsService();
-        String range = "Лист1!A2:B3";
+        String range = "Bot!A2:B3";
 
         ValueRange response = sheetsService.spreadsheets().values()
                 .get(SPREADSHEET_ID, range)

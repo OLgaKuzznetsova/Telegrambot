@@ -16,10 +16,10 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-        var ex = new Exel();
-        System.out.println(ex.readFromExcel());
-        var a = new ErrorSearch();
-        System.out.println(a.getTheNumberOfTermMismatches("Виктор"));
+        var e = new GoogleSheet();
+        e.getInformation();
+        //var a = new ErrorSearch();
+        //System.out.println(a.getTheNumberOfTermMismatches("Виктор"));
 
 
 
