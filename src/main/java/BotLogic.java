@@ -28,27 +28,27 @@ public class BotLogic {
         }
 
         if (dialogStates.getState(chatId) == DialogStates.State.SEARCH) {
-            return modeForDefiningTerms(userInput, chatId);
+            return modeForDefiningTerms(userInput);
         }
         return "Данные введены неверно";
     }
 
-    private String modeForSearchSimilarWords(String userInput, String chatId) {
+    private String modeForSearchSimilarWords(String userInput) {
         var message = new StringBuilder("Мы не нашли такого определения. Возможно вы имели ввиду одно из этих?\n\n");
 
         for (var term : errorSearch.getSimilarTerms(userInput)) {
-            message.append(term);
+            message.append(term + ", ");
         }
         return message.toString();
     }
 
-    private String modeForDefiningTerms(String userInput, String chatId) {
+    private String modeForDefiningTerms(String userInput) {
         for (int i = 0; i < termDefinition.size(); i++) {
             if (userInput.equalsIgnoreCase(termDefinition.get(i).getTerm())) {
                 return termDefinition.get(i).getTerm() + " - " + termDefinition.get(i).getDefinition(false);
             }
         }
-        return modeForSearchSimilarWords(userInput, chatId);
+        return modeForSearchSimilarWords(userInput);
     }
 
     private String menuForBotDescription = "Вас приветствует бот по поиску определений по математике. \n" +
