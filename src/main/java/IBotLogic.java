@@ -1,33 +1,29 @@
 import java.util.ArrayList;
 
-public class BotLogic {
-    private DialogStates dialogStates = new DialogStates();
-    private TermRepository termRepository = new TermRepository();
-    private ArrayList<TermDefinition> termDefinition;
-    private ErrorSearch errorSearch = new ErrorSearch();
+public interface IBotLogic extends IDialogStates, IErrorSearch {
+    TermRepository termRepository = new TermRepository();
 
-    public String handleUserInput(String chatId, String userInput) {
-        termDefinition = termRepository.getData();
+    default String handleUserInput(String chatId, String userInput) {
         if (userInput.equals("/start")) {
             return mainMenu();
         }
-        if (!dialogStates.containsChatId(chatId)) {
-            dialogStates.addChatId(chatId);
+        if (!IDialogStates.containsChatId(chatId)) {
+            IDialogStates.addChatId(chatId);
         }
         if (userInput.equalsIgnoreCase("Термины")) {
-            dialogStates.changeState(chatId, DialogStates.State.MENU);
+            IDialogStates.changeState(chatId, IDialogStates.State.MENU);
             return menuForDisplayingTerms();
         }
         if (userInput.equalsIgnoreCase("Поиск")) {
-            dialogStates.changeState(chatId, DialogStates.State.SEARCH);
+            IDialogStates.changeState(chatId, IDialogStates.State.SEARCH);
             return "Введите термин";
         }
         if (userInput.equalsIgnoreCase("Меню")) {
-            dialogStates.changeState(chatId, DialogStates.State.MENU);
+            IDialogStates.changeState(chatId, IDialogStates.State.MENU);
             return menuToSelectTheMode;
         }
 
-        if (dialogStates.getState(chatId) == DialogStates.State.SEARCH) {
+        if (IDialogStates.getState(chatId) == IDialogStates.State.SEARCH) {
             return modeForDefiningTerms(userInput);
         }
         return "Данные введены неверно";
@@ -36,13 +32,14 @@ public class BotLogic {
     private String modeForSearchSimilarWords(String userInput) {
         var message = new StringBuilder("Мы не нашли такого определения. Возможно вы имели ввиду одно из этих?\n\n");
 
-        for (var term : errorSearch.getSimilarTerms(userInput)) {
+        for (var term : IErrorSearch.getSimilarTerms(userInput)) {
             message.append(term + ", ");
         }
         return message.toString();
     }
 
     private String modeForDefiningTerms(String userInput) {
+        ArrayList<TermDefinition> termDefinition = termRepository.getData();
         for (int i = 0; i < termDefinition.size(); i++) {
             if (userInput.equalsIgnoreCase(termDefinition.get(i).getTerm())) {
                 return termDefinition.get(i).getTerm() + " - " + termDefinition.get(i).getDefinition(false);
@@ -51,10 +48,10 @@ public class BotLogic {
         return modeForSearchSimilarWords(userInput);
     }
 
-    private String menuForBotDescription = "Вас приветствует бот по поиску определений по математике. \n" +
+    String menuForBotDescription = "Вас приветствует бот по поиску определений по математике. \n" +
             "Он поможет вам найти нужное определение определения.\n";
 
-    private String menuToSelectTheMode = "Отправьте:\n" +
+    String menuToSelectTheMode = "Отправьте:\n" +
             "Поиск - если хотите найти определения \n" +
             "Меню - если хотите вернуться обратно в меню\n" +
             "Термины - если хотите узнать всю базу терминов нашего бота";
@@ -63,7 +60,8 @@ public class BotLogic {
         return menuForBotDescription + menuToSelectTheMode;
     }
 
-    public String menuForDisplayingTerms() {
+    default String menuForDisplayingTerms() {
+        ArrayList<TermDefinition> termDefinition = termRepository.getData();
         var message = new StringBuilder();
         for (int i = 0; i < termDefinition.size(); i++) {
             message.append(termDefinition.get(i).getTerm() + ", ");

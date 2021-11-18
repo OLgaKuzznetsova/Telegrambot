@@ -2,13 +2,23 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
 public class Main {
     public static void main(String[] args) {
-        var botLogic = new BotLogic();
-        var telegramBot = new TelegramBotApplication(botLogic);
+
+
+        var botLogic = new IBotLogic(){
+            @Override
+            public String handleUserInput(String chatId, String userInput) {
+                return IBotLogic.super.handleUserInput(chatId, userInput);
+            }
+        };
+
+
+        var botUsername = System.getenv("BOT_USERNAME");
+        var botToken = System.getenv("BOT_TOKEN");
+        var telegramBot = new TelegramBotApplication(botLogic, botUsername, botToken);
+
+
 
         try {
             var botsApi = new TelegramBotsApi(DefaultBotSession.class);

@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ErrorSearch {
-    private TermRepository termRepository = new TermRepository();
-    private final ArrayList<TermDefinition> termDefinition = termRepository.getData();
+public interface IErrorSearch {
+    TermRepository termRepository = new TermRepository();
+    ArrayList<TermDefinition> termDefinition = termRepository.getData();
 
-    private int getLevenshteinDistance(String word1, String word2) {
+    static int getLevenshteinDistance(String word1, String word2) {
         int[][] distance = new int[word1.length() + 1][word2.length() + 1];
 
         for (int i = 0; i <= word1.length(); i++) {
@@ -26,15 +26,15 @@ public class ErrorSearch {
         return distance[word1.length()][word2.length()];
     }
 
-    private int min(int number1, int number2, int number3) {
+    static int min(int number1, int number2, int number3) {
         return Math.min(number1, Math.min(number2, number3));
     }
 
-    private int costOfSubstitution(char a, char b) {
+    static int costOfSubstitution(char a, char b) {
         return a == b ? 0 : 1;
     }
 
-    public ArrayList<String> getSimilarTerms(String userInput) {
+    static ArrayList<String> getSimilarTerms(String userInput) {
         Map<String, Integer> levenshteinDistanceBetweenTerms = new HashMap<>();
         ArrayList<String> similarTerms = new ArrayList<>();
         int minimalDistance = Integer.MAX_VALUE;
