@@ -6,15 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IBotLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DialogStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IDialogStates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ErrorSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IErrorSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/IBotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/IDialogStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DialogStates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/IErrorSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ErrorSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BotLogic.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DialogStates$State.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DialogStates.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ErrorSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/IBotLogic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/IDialogStates$State.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/IDialogStates.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/IErrorSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/TelegramBotApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TelegramBotApplication.class" afterDir="false" />
     </list>
@@ -68,7 +69,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.IGoogleSheetsRepo" />
       </list>
     </recent_temporary>
   </component>

@@ -3,22 +3,20 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 
-public class TelegramBotApplication extends TelegramLongPollingBot implements IBotLogic {
-    private IBotLogic bot;
+public class TelegramBotApplication extends TelegramLongPollingBot {
+    private BotLogic bot;
     String botUsername;
     String botToken;
-
-    public TelegramBotApplication(IBotLogic bot, String botUsername, String botToken) {
-        this.bot = bot;
+    private TermRepository termRepository = new TermRepository();
+    public TelegramBotApplication(BotLogic bot, String botUsername, String botToken) {
         this.botUsername = botUsername;
         this.botToken = botToken;
+        this.bot = bot;
     }
-
     @Override
     public String getBotUsername() {
         return botUsername;
     }
-
     @Override
     public String getBotToken() {
         return botToken;

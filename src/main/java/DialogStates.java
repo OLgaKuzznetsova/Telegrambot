@@ -1,27 +1,22 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public interface IDialogStates {
+public class DialogStates {
     public enum State {
         MENU(),
         SEARCH(),
     }
-
-    Map<String, State> stateByChatId = new HashMap<>();
-
-    static void addChatId(String chatId) {
+    private Map<String, State> stateByChatId = new HashMap<>();
+    public void addChatId(String chatId) {
         stateByChatId.put(chatId, State.MENU);
     }
-
-    static void changeState(String chatId, State state) {
+    public void changeState(String chatId, State state) {
         stateByChatId.replace(chatId, state);
     }
-
-    static State getState(String chatId) {
+    public State getState(String chatId) {
         return stateByChatId.get(chatId);
     }
-
-    static boolean containsChatId(String chatId) {
+    public boolean containsChatId(String chatId) {
         return stateByChatId.containsKey(chatId);
     }
 
