@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class GoogleSheetsRepo {
+    String google_sheets_repo_path = System.getenv("GOOGLE_SHEETS_REPO_PATH");
     private List<String[]> DataFromCSVFile() {
-        try (CSVReader reader = new CSVReader(new FileReader("D:\\Определения_для_бота.csv"))) {
+        try (CSVReader reader = new CSVReader(new FileReader(google_sheets_repo_path))) {
             List<String[]> dataFromCSVFile = reader.readAll();
             return dataFromCSVFile;
         } catch (CsvException e) {
