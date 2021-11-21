@@ -5,7 +5,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import java.net.MalformedURLException;
 
 public class Main {
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args)  {
         var botLogic = new BotLogic();
         var botUsername = System.getenv("BOT_USERNAME");
         var botToken = System.getenv("BOT_TOKEN");
