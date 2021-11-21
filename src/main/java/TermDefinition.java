@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class TermDefinition {
     private String term;
     private String definition;

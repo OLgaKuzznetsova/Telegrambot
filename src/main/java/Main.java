@@ -2,10 +2,8 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-import java.net.MalformedURLException;
-
 public class Main {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         var botLogic = new BotLogic();
         var botUsername = System.getenv("BOT_USERNAME");
         var botToken = System.getenv("BOT_TOKEN");
@@ -16,5 +14,6 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
     }
 }

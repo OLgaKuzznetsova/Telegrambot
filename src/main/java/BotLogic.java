@@ -1,10 +1,9 @@
-import java.util.ArrayList;
-
 public class BotLogic {
     private DialogStates dialogStates = new DialogStates();
     private TermRepository termRepository = new TermRepository();
 
     public String handleUserInput(String chatId, String userInput) {
+        System.out.println("qwe");
         if (userInput.equals("/start")) {
             return mainMenu();
         }
@@ -13,7 +12,7 @@ public class BotLogic {
         }
         if (userInput.equalsIgnoreCase("Термины")) {
             dialogStates.changeState(chatId, DialogStates.State.MENU);
-            return termRepository.allTerms();
+            return termRepository.getAllTerms();
         }
         if (userInput.equalsIgnoreCase("Поиск")) {
             dialogStates.changeState(chatId, DialogStates.State.SEARCH);
@@ -25,7 +24,7 @@ public class BotLogic {
         }
 
         if (dialogStates.getState(chatId) == DialogStates.State.SEARCH) {
-            return termRepository.definitionToTerm(userInput);
+            return termRepository.gatDefinitionToTerm(userInput);
         }
         return "Данные введены неверно";
     }
@@ -42,5 +41,7 @@ public class BotLogic {
     private String mainMenu() {
         return menuForBotDescription + menuToSelectTheMode;
     }
+
+
 
 }

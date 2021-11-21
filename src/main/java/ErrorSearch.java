@@ -1,12 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 public class ErrorSearch {
-    private TermRepository termRepository = new TermRepository();
-    private final ArrayList<TermDefinition> termDefinition = termRepository.getData();
-
-    private int getLevenshteinDistance(String word1, String word2) {
+    public int getLevenshteinDistance(String word1, String word2) {
 
         int[][] distance = new int[word1.length() + 1][word2.length() + 1];
 
@@ -35,23 +28,5 @@ public class ErrorSearch {
         return a == b ? 0 : 1;
     }
 
-    public ArrayList<String> getSimilarTerms(String userInput) {
 
-        Map<String, Integer> levenshteinDistanceBetweenTerms = new HashMap<>();
-        ArrayList<String> similarTerms = new ArrayList<>();
-        int minimalDistance = Integer.MAX_VALUE;
-        for (var i = 0; i < termDefinition.size(); i++) {
-            var distance = getLevenshteinDistance(userInput.toLowerCase(), termDefinition.get(i).getTerm().toLowerCase());
-            levenshteinDistanceBetweenTerms.put(termDefinition.get(i).getTerm().toLowerCase(), distance);
-            if (distance < minimalDistance) {
-                minimalDistance = distance;
-            }
-        }
-        for (var key : levenshteinDistanceBetweenTerms.keySet()) {
-            if (levenshteinDistanceBetweenTerms.get(key) == minimalDistance) {
-                similarTerms.add(key);
-            }
-        }
-        return similarTerms;
-    }
 }

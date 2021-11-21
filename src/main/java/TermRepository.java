@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TermRepository {
@@ -8,13 +9,8 @@ public class TermRepository {
     private ErrorSearch errorSearch = new ErrorSearch();
 
     public TermRepository() {
-        var keys = dataFromCsvFile.keySet();
-
-        for (var i :  keys)
-            addData(i , dataFromCsvFile.get(i));
-
-        for (var line : termDefinition)
-            System.out.println(line.getTerm() + " : " + line.getDefinition(false));
+        for (var i : dataFromCsvFile.keySet())
+            addData(i, dataFromCsvFile.get(i));
     }
 
     private void addData(String term, String definition) {
@@ -23,30 +19,47 @@ public class TermRepository {
         termDefinition.add(classTermDefinition);
     }
 
-    public ArrayList<TermDefinition> getData() {
-        return termDefinition;
-    }
-    public String allTerms(){
+    public String getAllTerms() {
         var terms = dataFromCsvFile.keySet().toString();
-        return terms.substring(1, terms.length()-1);
+        return terms.substring(1, terms.length() - 1);
     }
 
-    private String similarWords(String userInput) {
+    private String gatSimilarWords(String userInput) {
         var message = new StringBuilder("Мы не нашли такого определения. Возможно вы имели ввиду одно из этих?\n\n");
 
-        for (var term : errorSearch.getSimilarTerms(userInput)) {
+        for (var term : getSimilarTerms(userInput)) {
 
             message.append(term + ", ");
         }
         return message.toString();
     }
 
-    public String definitionToTerm(String userInput) {
+    public String gatDefinitionToTerm(String userInput) {
         for (int i = 0; i < termDefinition.size(); i++) {
             if (userInput.equalsIgnoreCase(termDefinition.get(i).getTerm())) {
                 return termDefinition.get(i).getTerm() + " - " + termDefinition.get(i).getDefinition(false);
             }
         }
-        return similarWords(userInput);
+        return gatSimilarWords(userInput);
+    }
+
+    public ArrayList<String> getSimilarTerms(String userInput) {
+
+        Map<String, Integer> levenshteinDistanceBetweenTerms = new HashMap<>();
+        ArrayList<String> similarTerms = new ArrayList<>();
+        int minimalDistance = Integer.MAX_VALUE;
+        for (var i = 0; i < termDefinition.size(); i++) {
+            var distance = errorSearch.getLevenshteinDistance(userInput.toLowerCase(), termDefinition.get(i).getTerm().toLowerCase());
+            levenshteinDistanceBetweenTerms.put(termDefinition.get(i).getTerm().toLowerCase(), distance);
+            if (distance < minimalDistance) {
+                minimalDistance = distance;
+            }
+        }
+        for (var key : levenshteinDistanceBetweenTerms.keySet()) {
+            if (levenshteinDistanceBetweenTerms.get(key) == minimalDistance) {
+                similarTerms.add(key);
+            }
+        }
+        return similarTerms;
     }
 }

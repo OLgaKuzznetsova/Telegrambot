@@ -7,7 +7,7 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
     private BotLogic bot;
     String botUsername;
     String botToken;
-    private TermRepository termRepository = new TermRepository();
+
     public TelegramBotApplication(BotLogic bot, String botUsername, String botToken) {
         this.botUsername = botUsername;
         this.botToken = botToken;
@@ -29,6 +29,7 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
             if (!update.hasMessage()) {
                 return;
             }
+
 
             var message = update.getMessage();
             var currentChatId = message.getChatId().toString();
