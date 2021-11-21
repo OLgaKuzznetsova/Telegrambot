@@ -6,14 +6,13 @@ public class TermRepository {
 
     public TermRepository() {
         var dataFromCsvFile = googleSheetsRepo.getDataFromCSV();
-        var s = 0;
-        for (var line : dataFromCsvFile) {
-            if (s == 0) {
-                s = 1;
-                continue;
-            }
-            addData(line[0], line[1]);
-        }
+        var keys = dataFromCsvFile.keySet();
+
+        for (var i :  keys)
+            addData(i , dataFromCsvFile.get(i));
+
+        for (var line : termDefinition)
+            System.out.println(line.getTerm() + " : " + line.getDefinition(false));
     }
 
     private void addData(String term, String definition) {

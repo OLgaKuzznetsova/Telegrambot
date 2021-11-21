@@ -16,15 +16,12 @@ public class BotLogic {
         }
         if (userInput.equalsIgnoreCase("Термины")) {
             dialogStates.changeState(chatId, DialogStates.State.MENU);
-            return menuForDisplayingTerms();
         }
         if (userInput.equalsIgnoreCase("Поиск")) {
             dialogStates.changeState(chatId, DialogStates.State.SEARCH);
-            return "Введите термин";
         }
         if (userInput.equalsIgnoreCase("Меню")) {
             dialogStates.changeState(chatId, DialogStates.State.MENU);
-            return menuToSelectTheMode;
         }
 
         if (dialogStates.getState(chatId) == DialogStates.State.SEARCH) {
@@ -37,6 +34,7 @@ public class BotLogic {
         var message = new StringBuilder("Мы не нашли такого определения. Возможно вы имели ввиду одно из этих?\n\n");
 
         for (var term : errorSearch.getSimilarTerms(userInput)) {
+
             message.append(term + ", ");
         }
         return message.toString();
@@ -55,6 +53,7 @@ public class BotLogic {
             "Он поможет вам найти нужное определение определения.\n";
 
     private String menuToSelectTheMode = "Отправьте:\n" +
+
             "Поиск - если хотите найти определения \n" +
             "Меню - если хотите вернуться обратно в меню\n" +
             "Термины - если хотите узнать всю базу терминов нашего бота";

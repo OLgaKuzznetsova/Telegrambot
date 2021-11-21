@@ -5,20 +5,21 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class TelegramBotApplication extends TelegramLongPollingBot {
     private BotLogic bot;
+    String botUsername;
+    String botToken;
     private TermRepository termRepository = new TermRepository();
-
-    public TelegramBotApplication(BotLogic bot) {
+    public TelegramBotApplication(BotLogic bot, String botUsername, String botToken) {
+        this.botUsername = botUsername;
+        this.botToken = botToken;
         this.bot = bot;
     }
-
     @Override
     public String getBotUsername() {
-        return System.getenv("BOT_USERNAME");
+        return botUsername;
     }
-
     @Override
     public String getBotToken() {
-        return System.getenv("BOT_TOKEN");
+        return botToken;
     }
 
     @Override

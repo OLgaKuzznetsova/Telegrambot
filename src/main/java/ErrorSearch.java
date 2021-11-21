@@ -7,6 +7,7 @@ public class ErrorSearch {
     private final ArrayList<TermDefinition> termDefinition = termRepository.getData();
 
     private int getLevenshteinDistance(String word1, String word2) {
+
         int[][] distance = new int[word1.length() + 1][word2.length() + 1];
 
         for (int i = 0; i <= word1.length(); i++) {
@@ -35,6 +36,7 @@ public class ErrorSearch {
     }
 
     public ArrayList<String> getSimilarTerms(String userInput) {
+
         Map<String, Integer> levenshteinDistanceBetweenTerms = new HashMap<>();
         ArrayList<String> similarTerms = new ArrayList<>();
         int minimalDistance = Integer.MAX_VALUE;
