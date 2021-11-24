@@ -3,7 +3,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 
-public class TelegramBotApplication extends TelegramLongPollingBot {
+public class TelegramBotApplication extends TelegramLongPollingBot{
     private BotLogic bot;
     String botUsername;
     String botToken;
@@ -44,5 +44,3 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
     }
 
 }
-
-
