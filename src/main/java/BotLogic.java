@@ -14,15 +14,15 @@ public class BotLogic {
         if (!dialogStates.containsChatId(chatId)) {
             dialogStates.addChatId(chatId);
         }
-        if (userInput.equalsIgnoreCase("Термины")) {
+        if (userInput.equalsIgnoreCase("/terms")) {
             dialogStates.changeState(chatId, DialogStates.State.MENU);
             return termRepository.getAllTerms();
         }
-        if (userInput.equalsIgnoreCase("Поиск")) {
+        if (userInput.equalsIgnoreCase("/find")) {
             dialogStates.changeState(chatId, DialogStates.State.SEARCH);
             return "Введите термин";
         }
-        if (userInput.equalsIgnoreCase("Меню")) {
+        if (userInput.equalsIgnoreCase("/menu")) {
             dialogStates.changeState(chatId, DialogStates.State.MENU);
             return menuToSelectTheMode;
         }
@@ -38,9 +38,9 @@ public class BotLogic {
 
     private String menuToSelectTheMode = "Отправьте:\n" +
 
-            "Поиск - если хотите найти определения \n" +
-            "Меню - если хотите вернуться обратно в меню\n" +
-            "Термины - если хотите узнать всю базу терминов нашего бота";
+            "/find - если хотите найти определения \n" +
+            "/menu - если хотите вернуться обратно в меню\n" +
+            "/terms - если хотите узнать всю базу терминов нашего бота";
 
     private String mainMenu() {
         return menuForBotDescription + menuToSelectTheMode;
