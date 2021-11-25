@@ -15,31 +15,26 @@ public class BotLogic {
             dialogStates.addChatId(chatId);
         }
         if (userInput.equalsIgnoreCase("/terms")) {
-            dialogStates.changeState(chatId, DialogStates.State.MENU);
+            dialogStates.changeState(chatId, DialogStates.State.SEARCH);
             return termRepository.getAllTerms();
         }
-        if (userInput.equalsIgnoreCase("/find")) {
+        if (userInput.equalsIgnoreCase("/help")) {
             dialogStates.changeState(chatId, DialogStates.State.SEARCH);
-            return "Введите термин";
-        }
-        if (userInput.equalsIgnoreCase("/menu")) {
-            dialogStates.changeState(chatId, DialogStates.State.MENU);
             return menuToSelectTheMode;
         }
-
         if (dialogStates.getState(chatId) == DialogStates.State.SEARCH) {
-            return termRepository.gatDefinitionToTerm(userInput);
+            return termRepository.getDefinitionToTerm(userInput);
         }
         return "Данные введены неверно";
     }
 
+
     private String menuForBotDescription = "Вас приветствует бот по поиску определений по математике. \n" +
-            "Он поможет вам найти нужное определение определения.\n";
+            "Он поможет вам найти нужное определение.\n";
 
     private String menuToSelectTheMode = "Отправьте:\n" +
-
-            "/find - если хотите найти определения \n" +
-            "/menu - если хотите вернуться обратно в меню\n" +
+            "термин - если хотите узнать его определение\n"+
+            "/help - если хотите вернуться обратно в меню\n" +
             "/terms - если хотите узнать всю базу терминов нашего бота";
 
     private String mainMenu() {
