@@ -14,33 +14,28 @@ public class BotLogic {
         if (!dialogStates.containsChatId(chatId)) {
             dialogStates.addChatId(chatId);
         }
-        if (userInput.equalsIgnoreCase("Термины")) {
-            dialogStates.changeState(chatId, DialogStates.State.MENU);
+        if (userInput.equalsIgnoreCase("/terms")) {
+            dialogStates.changeState(chatId, DialogStates.State.SEARCH);
             return termRepository.getAllTerms();
         }
-        if (userInput.equalsIgnoreCase("Поиск")) {
+        if (userInput.equalsIgnoreCase("/help")) {
             dialogStates.changeState(chatId, DialogStates.State.SEARCH);
-            return "Введите термин";
-        }
-        if (userInput.equalsIgnoreCase("Меню")) {
-            dialogStates.changeState(chatId, DialogStates.State.MENU);
             return menuToSelectTheMode;
         }
-
         if (dialogStates.getState(chatId) == DialogStates.State.SEARCH) {
-            return termRepository.gatDefinitionToTerm(userInput);
+            return termRepository.getDefinitionToTerm(userInput);
         }
         return "Данные введены неверно";
     }
 
+
     private String menuForBotDescription = "Вас приветствует бот по поиску определений по математике. \n" +
-            "Он поможет вам найти нужное определение определения.\n";
+            "Он поможет вам найти нужное определение.\n";
 
     private String menuToSelectTheMode = "Отправьте:\n" +
-
-            "Поиск - если хотите найти определения \n" +
-            "Меню - если хотите вернуться обратно в меню\n" +
-            "Термины - если хотите узнать всю базу терминов нашего бота";
+            "термин - если хотите узнать его определение\n"+
+            "/help - если хотите вернуться обратно в меню\n" +
+            "/terms - если хотите узнать всю базу терминов нашего бота";
 
     private String mainMenu() {
         return menuForBotDescription + menuToSelectTheMode;

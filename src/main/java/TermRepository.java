@@ -12,10 +12,10 @@ public class TermRepository {
         this.termDefinition = termDefinition;
         this.dataFromCsvFile = dataFromCsvFile;
         for (var i : this.dataFromCsvFile.keySet())
-            addData(i, this.dataFromCsvFile.get(i));
+            add(i, this.dataFromCsvFile.get(i));
     }
 
-    private void addData(String term, String definition) {
+    private void add(String term, String definition) {
         TermDefinition classTermDefinition = new TermDefinition();
         classTermDefinition.setValues(term, definition);
         termDefinition.add(classTermDefinition);
@@ -26,23 +26,42 @@ public class TermRepository {
         return terms.substring(1, terms.length() - 1);
     }
 
-    private String gatSimilarWords(String userInput) {
-        var message = new StringBuilder("Мы не нашли такого определения. Возможно вы имели ввиду одно из этих?\n\n");
+    private String waitedAnswer;
 
-        for (var term : getSimilarTerms(userInput)) {
-
-            message.append(term + ", ");
+    private String getSimilarWords(String userInput) {
+        var similarTerms = getSimilarTerms(userInput);
+        if (similarTerms.size() == 1) {
+            var message = "Мы не нашли такого определения. Вы имели ввиду это?\n\n";
+            waitedAnswer = similarTerms.get(0);
+            message += waitedAnswer;
+            return message;
         }
-        return message.toString();
+        var message = "Мы не нашли такого определения. Возможно вы имели ввиду одно из этих?\n\n";
+
+        for (int i = 0; i < similarTerms.size(); i++) {
+
+            if (i == (similarTerms.size() - 1)) {
+                message += similarTerms.get(i);
+            }
+            else {
+                message += similarTerms.get(i) + ",";
+            }
+
+        }
+        return message;
     }
 
-    public String gatDefinitionToTerm(String userInput) {
+    public String getDefinitionToTerm(String userInput) {
+        if ((userInput.equalsIgnoreCase("да"))&&(waitedAnswer.length() != 0)){
+            userInput = waitedAnswer;
+            waitedAnswer = "";
+        }
         for (int i = 0; i < termDefinition.size(); i++) {
             if (userInput.equalsIgnoreCase(termDefinition.get(i).getTerm())) {
                 return termDefinition.get(i).getTerm() + " - " + termDefinition.get(i).getDefinition(false);
             }
         }
-        return gatSimilarWords(userInput);
+        return getSimilarWords(userInput);
     }
 
     public ArrayList<String> getSimilarTerms(String userInput) {

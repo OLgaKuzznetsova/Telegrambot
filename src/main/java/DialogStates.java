@@ -3,12 +3,12 @@ import java.util.Map;
 
 public class DialogStates {
     public enum State {
-        MENU(),
+        TEST(),
         SEARCH(),
     }
     private Map<String, State> stateByChatId = new HashMap<>();
     public void addChatId(String chatId) {
-        stateByChatId.put(chatId, State.MENU);
+        stateByChatId.put(chatId, State.SEARCH);
     }
     public void changeState(String chatId, State state) {
         stateByChatId.replace(chatId, state);
