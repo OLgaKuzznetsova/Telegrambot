@@ -1,9 +1,13 @@
 public class BotLogic {
-    private DialogStates dialogStates = new DialogStates();
-    private TermRepository termRepository = new TermRepository();
+    private DialogStates dialogStates;
+    private TermRepository termRepository;
+
+    public BotLogic(DialogStates dialogStates, TermRepository termRepository) {
+        this.dialogStates = dialogStates;
+        this.termRepository = termRepository;
+    }
 
     public String handleUserInput(String chatId, String userInput) {
-        System.out.println("qwe");
         if (userInput.equals("/start")) {
             return mainMenu();
         }

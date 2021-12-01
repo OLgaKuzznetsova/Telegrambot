@@ -6,6 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GoogleSheetsRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GoogleSheetsRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TermRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TermRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MathTerm - Definition.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/credentials.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BotLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BotLogic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ErrorSearch.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ErrorSearch.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GoogleSheetsRepo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GoogleSheetsRepo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/MathTerm - Definition.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TermDefinition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TermDefinition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TermRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TermRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/credentials.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +35,7 @@
       <list>
         <option value="JavaScript File" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>

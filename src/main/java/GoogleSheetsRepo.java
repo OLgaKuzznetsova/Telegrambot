@@ -10,11 +10,16 @@ import java.util.Map;
 
 
 public class GoogleSheetsRepo {
-    //String google_sheets_repo_path = System.getenv("GOOGLE_SHEETS_REPO_PATH");
+    String google_sheets_repo_url;
+
+    public GoogleSheetsRepo(String google_sheets_repo_url) {
+        this.google_sheets_repo_url = google_sheets_repo_url;
+    }
+
     private Map<String, String> dataFromCSVFile() {
         URL url = null;
         try {
-            url = new URL("https://docs.google.com/spreadsheets/d/e/2PACX-1vR_HwF6CXNajSikw_pLaDhXmCNlQiXZlm6lhvQNR5NF0uxInHEVfZ-utVoKnOJEV6bATE8XfebcRpO2/pub?output=csv");
+            url = new URL(google_sheets_repo_url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

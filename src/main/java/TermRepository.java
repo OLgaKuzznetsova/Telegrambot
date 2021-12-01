@@ -3,14 +3,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TermRepository {
-    private ArrayList<TermDefinition> termDefinition = new ArrayList<>();
-    private GoogleSheetsRepo googleSheetsRepo = new GoogleSheetsRepo();
-    private Map<String, String> dataFromCsvFile = googleSheetsRepo.getDataFromCSV();
-    private ErrorSearch errorSearch = new ErrorSearch();
+    private ArrayList<TermDefinition> termDefinition;
+    private Map<String, String> dataFromCsvFile;
+    private ErrorSearch errorSearch;
 
-    public TermRepository() {
-        for (var i : dataFromCsvFile.keySet())
-            addData(i, dataFromCsvFile.get(i));
+    public TermRepository(ErrorSearch errorSearch, ArrayList<TermDefinition> termDefinition, Map<String, String> dataFromCsvFile) {
+        this.errorSearch = errorSearch;
+        this.termDefinition = termDefinition;
+        this.dataFromCsvFile = dataFromCsvFile;
+        for (var i : this.dataFromCsvFile.keySet())
+            addData(i, this.dataFromCsvFile.get(i));
     }
 
     private void addData(String term, String definition) {
