@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        String google_sheets_repo_url = System.getenv("GOOGLE_SHEETS_REPO_URL");
+
+        String google_sheets_repo_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_HwF6CXNajSikw_pLaDhXmCNlQiXZlm6lhvQNR5NF0uxInHEVfZ-utVoKnOJEV6bATE8XfebcRpO2/pub?output=csv";
         var googleSheetsRepo = new GoogleSheetsRepo(google_sheets_repo_url);
 
         Map<String, String> dataFromCsvFile = googleSheetsRepo.getDataFromCSV();
@@ -15,7 +16,7 @@ public class Main {
         var errorSearch = new ErrorSearch();
 
         var termRepository = new TermRepository(errorSearch, termDefinition, dataFromCsvFile);
-        var dialogStates = new DialogStates();
+        var dialogStates = new ChatStateRepository();
 
         var botLogic = new BotLogic(dialogStates, termRepository);
         var botUsername = System.getenv("BOT_USERNAME");

@@ -26,46 +26,20 @@ public class TermRepository {
         return terms.substring(1, terms.length() - 1);
     }
 
-    private String waitedAnswer;
 
-    private String getSimilarWords(String userInput) {
-        var similarTerms = getSimilarTerms(userInput);
-        if (similarTerms.size() == 1) {
-            var message = "Мы не нашли такого определения. Вы имели ввиду это?\n\n";
-            waitedAnswer = similarTerms.get(0);
-            message += waitedAnswer;
-            return message;
-        }
-        var message = "Мы не нашли такого определения. Возможно вы имели ввиду одно из этих?\n\n";
-
-        for (int i = 0; i < similarTerms.size(); i++) {
-
-            if (i == (similarTerms.size() - 1)) {
-                message += similarTerms.get(i);
-            }
-            else {
-                message += similarTerms.get(i) + ",";
-            }
-
-        }
-        return message;
-    }
-
-    public String getDefinitionToTerm(String userInput) {
-        if ((userInput.equalsIgnoreCase("да"))&&(waitedAnswer.length() != 0)){
-            userInput = waitedAnswer;
-            waitedAnswer = "";
-        }
+    public String[] getDefinitionToTerm(String userInput) {
+        var result = new String[2];
         for (int i = 0; i < termDefinition.size(); i++) {
             if (userInput.equalsIgnoreCase(termDefinition.get(i).getTerm())) {
-                return termDefinition.get(i).getTerm() + " - " + termDefinition.get(i).getDefinition(false);
+                result[0] = termDefinition.get(i).getTerm();
+                result[1] = termDefinition.get(i).getDefinition(false);
+                return result;
             }
         }
-        return getSimilarWords(userInput);
+        return null;
     }
 
     public ArrayList<String> getSimilarTerms(String userInput) {
-
         Map<String, Integer> levenshteinDistanceBetweenTerms = new HashMap<>();
         ArrayList<String> similarTerms = new ArrayList<>();
         int minimalDistance = Integer.MAX_VALUE;
