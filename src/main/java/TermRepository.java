@@ -3,13 +3,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TermRepository {
-    private ArrayList<TermDefinition> termDefinition;
+    ArrayList<TermDefinition> termDefinition = new ArrayList<>();
     private Map<String, String> dataFromCsvFile;
     private ErrorSearch errorSearch;
 
-    public TermRepository(ErrorSearch errorSearch, ArrayList<TermDefinition> termDefinition, Map<String, String> dataFromCsvFile) {
+    public TermRepository(ErrorSearch errorSearch, Map<String, String> dataFromCsvFile) {
         this.errorSearch = errorSearch;
-        this.termDefinition = termDefinition;
         this.dataFromCsvFile = dataFromCsvFile;
         for (var i : this.dataFromCsvFile.keySet())
             add(i, this.dataFromCsvFile.get(i));

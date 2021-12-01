@@ -2,7 +2,6 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class Main {
@@ -11,10 +10,9 @@ public class Main {
         var googleSheetsRepo = new GoogleSheetsRepo(google_sheets_repo_url);
 
         Map<String, String> dataFromCsvFile = googleSheetsRepo.getDataFromCSVFile();
-        ArrayList<TermDefinition> termDefinition = new ArrayList<>();
         var errorSearch = new ErrorSearch();
 
-        var termRepository = new TermRepository(errorSearch, termDefinition, dataFromCsvFile);
+        var termRepository = new TermRepository(errorSearch, dataFromCsvFile);
         var dialogStates = new ChatStateRepository();
 
         var botLogic = new BotLogic(dialogStates, termRepository);
