@@ -1,3 +1,8 @@
+import org.apache.xmlbeans.impl.regex.RegularExpression;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class BotLogic {
     private ChatStateRepository chatStateRepository;
     private TermRepository termRepository;
@@ -45,10 +50,10 @@ public class BotLogic {
     }
 
     private String checkUserInput(String chatId, String userInput) {
-        if (userInput == "написать код для проверки содержимого") {
-            return "Данные введены неверно";
+        if (userInput.matches("[а-яА-ЯёЁ ]+")) {
+            return getDefinitionToTerm(chatId, userInput);
         }
-        return getDefinitionToTerm(chatId, userInput);
+        return "Данные введены неверно. Если вы забыли как пользоваться ботом введите /help";
     }
 
     private String getDefinitionToTerm(String chatId, String userInput) {
