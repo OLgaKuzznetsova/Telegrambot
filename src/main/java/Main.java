@@ -7,11 +7,10 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-
-        String google_sheets_repo_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_HwF6CXNajSikw_pLaDhXmCNlQiXZlm6lhvQNR5NF0uxInHEVfZ-utVoKnOJEV6bATE8XfebcRpO2/pub?output=csv";
+        String google_sheets_repo_url = System.getenv("GOOGLE_SHEETS_REPO_URL");
         var googleSheetsRepo = new GoogleSheetsRepo(google_sheets_repo_url);
 
-        Map<String, String> dataFromCsvFile = googleSheetsRepo.getDataFromCSV();
+        Map<String, String> dataFromCsvFile = googleSheetsRepo.getDataFromCSVFile();
         ArrayList<TermDefinition> termDefinition = new ArrayList<>();
         var errorSearch = new ErrorSearch();
 
@@ -27,7 +26,7 @@ public class Main {
             var botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(telegramBot);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
 
     }

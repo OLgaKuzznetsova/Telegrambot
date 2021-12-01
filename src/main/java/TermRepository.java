@@ -21,12 +21,6 @@ public class TermRepository {
         termDefinition.add(classTermDefinition);
     }
 
-    public String getAllTerms() {
-        var terms = dataFromCsvFile.keySet().toString();
-        return terms.substring(1, terms.length() - 1);
-    }
-
-
     public String[] getDefinitionToTerm(String userInput) {
         var result = new String[2];
         for (int i = 0; i < termDefinition.size(); i++) {

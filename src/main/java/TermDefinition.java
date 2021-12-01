@@ -12,7 +12,7 @@ public class TermDefinition {
     }
 
     public String getDefinition(boolean capitalize) {
-        if (capitalize){
+        if (capitalize) {
             definition = definition.substring(0, 1).toUpperCase() + definition.substring(1);
         }
         return definition;

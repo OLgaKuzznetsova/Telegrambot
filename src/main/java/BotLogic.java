@@ -16,7 +16,7 @@ public class BotLogic {
         }
         if (userInput.equalsIgnoreCase("/terms")) {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
-            return termRepository.getAllTerms();
+            return getDescriptionToBot();
         }
         if (userInput.equalsIgnoreCase("/help")) {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
@@ -27,14 +27,15 @@ public class BotLogic {
         }
         if (chatStateRepository.getState(chatId) == ChatStateRepository.State.ERROR) {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
-            return get(chatId,userInput);
+            return getAnswerToWrongTerm(chatId, userInput);
         }
 
         return "Данные введены неверно";
     }
-    private String get (String chatId, String userInput){
+
+    private String getAnswerToWrongTerm(String chatId, String userInput) {
         var message = "";
-        if (userInput.equalsIgnoreCase("да") & chatStateRepository.containsAnswerByChatId(chatId)){
+        if (userInput.equalsIgnoreCase("да") & chatStateRepository.containsAnswerByChatId(chatId)) {
             message = checkUserInput(chatId, chatStateRepository.getIntendedAnswer(chatId));
             chatStateRepository.deleteAnswerByChatId(chatId);
         } else {
@@ -43,19 +44,19 @@ public class BotLogic {
         return message;
     }
 
-    private String checkUserInput(String chatId, String userInput){
-        if (userInput == "написать код для проверки содержимого"){
+    private String checkUserInput(String chatId, String userInput) {
+        if (userInput == "написать код для проверки содержимого") {
             return "Данные введены неверно";
         }
         return getDefinitionToTerm(chatId, userInput);
     }
 
-    private String getDefinitionToTerm(String chatId, String userInput){
+    private String getDefinitionToTerm(String chatId, String userInput) {
         var res = termRepository.getDefinitionToTerm(userInput);
-        if (res == null){
+        if (res == null) {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.ERROR);
             var similarTerms = termRepository.getSimilarTerms(userInput);
-            if (similarTerms.size() == 1){
+            if (similarTerms.size() == 1) {
                 chatStateRepository.addIntendedAnswerByChatId(chatId, similarTerms.get(0));
             }
             String message = "Мы не нашли такого определения. Вы имели ввиду это?\n\n" + similarTerms.get(0);
@@ -64,25 +65,31 @@ public class BotLogic {
 
             }
             return message;
-        }
-        else{
+        } else {
             return res[0] + " - " + res[1];
         }
     }
 
 
-    private String menuForBotDescription = "Вас приветствует бот по поиску определений по математике. \n" +
-            "Он поможет вам найти нужное определение.\n";
+    private String menuForBotDescription = "Вас приветствует бот по поиску определений по дискретной математике. \n" +
+            "Он поможет вам найти нужное определение.\n" +
+            "Введите термин, чтобы узнать его определение\n";
 
     private String menuToSelectTheMode = "Отправьте:\n" +
-            "термин - если хотите узнать его определение\n"+
-            "/help - если хотите вернуться обратно в меню\n" +
-            "/terms - если хотите узнать всю базу терминов нашего бота";
+            "/help - вернуться меню\n" +
+            "/terms - посмотреть какие определения есть у бота";
+
+    private String getDescriptionToBot() {
+        return "Бот знает определния по дискретной математике 2 курса в институте.\n" +
+                "Он знает термины по таким темам как:\n" +
+                "   - теория множеств\n" +
+                "   - графы\n" +
+                "   - О-символика\n" +
+                "   - булевы функции\n\n" +
+                "Например, вы можете ввести такие темрмины как: биекция, граф, отношение эквивалентности и другие.";
+    }
 
     private String mainMenu() {
         return menuForBotDescription + menuToSelectTheMode;
     }
-
-
-
 }
