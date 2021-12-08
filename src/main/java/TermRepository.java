@@ -1,3 +1,5 @@
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +20,13 @@ public class TermRepository {
         TermDefinition classTermDefinition = new TermDefinition();
         classTermDefinition.setValues(term, definition);
         termDefinition.add(classTermDefinition);
+    }
+
+    public ArrayList<String> getTerms(){
+        ArrayList<String> terms = new ArrayList<>();
+        for (var termAndDefinition : termDefinition)
+            terms.add(termAndDefinition.getTerm());
+        return terms;
     }
 
     public String[] getDefinitionToTerm(String userInput) {

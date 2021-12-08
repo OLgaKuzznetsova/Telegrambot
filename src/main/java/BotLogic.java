@@ -1,8 +1,3 @@
-import org.apache.xmlbeans.impl.regex.RegularExpression;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class BotLogic {
     private ChatStateRepository chatStateRepository;
     private TermRepository termRepository;
@@ -18,6 +13,9 @@ public class BotLogic {
         }
         if (!chatStateRepository.containsChatId(chatId)) {
             chatStateRepository.addChatId(chatId);
+            chatStateRepository.addChatIdForHistory(chatId);
+            for (var term : termRepository.getTerms()){
+                chatStateRepository.changeStateToTerm(chatId, term, ChatStateRepository.State.NOT_USE);}
         }
         if (userInput.equalsIgnoreCase("/terms")) {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
@@ -27,9 +25,24 @@ public class BotLogic {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
             return menuToSelectTheMode;
         }
+
+        if (userInput.equalsIgnoreCase("/see") &
+                chatStateRepository.getState(chatId) == ChatStateRepository.State.CHECK) {
+            return checkUserForKnowledge(chatId);
+        }
+        if (userInput.equalsIgnoreCase("/check")) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
+            return menuForCheckingKnowledge(chatId);
+        }
+        if (chatStateRepository.getState(chatId) == ChatStateRepository.State.SMTH) {
+            return changeStateToAnswer(chatId, userInput);
+        }
+
         if (chatStateRepository.getState(chatId) == ChatStateRepository.State.SEARCH) {
             return checkUserInput(chatId, userInput);
         }
+
+
         if (chatStateRepository.getState(chatId) == ChatStateRepository.State.ERROR) {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
             return getAnswerToWrongTerm(chatId, userInput);
@@ -37,12 +50,55 @@ public class BotLogic {
 
         return "Данные введены неверно";
     }
+    private String menuForCheckingKnowledge(String chatId){
+        for (var term : termRepository.getTerms()){
+            if (chatStateRepository.getStateToTerm(chatId, term) == ChatStateRepository.State.NOT_USE){
+                chatStateRepository.addLastAnswerByChatId(chatId, term);
+                return "Дайте определение этому термину:\n" +
+                        term +
+                        "\n\n" +
+                        "Нажмите:\n" +
+                        "/see - чтобы посмотреть определение.";
+            }
+        }
+        return "a";
+    }
+
+    private String changeStateToAnswer(String chatId, String userInput){
+        if (userInput.equalsIgnoreCase("/1")){
+            chatStateRepository.changeStateToTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.LEARN);
+            chatStateRepository.deleteLastAnswerByChatId(chatId);
+            chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
+            return menuForCheckingKnowledge(chatId);
+        }
+        else if (userInput.equalsIgnoreCase("/2")){
+            chatStateRepository.changeStateToTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.NOT_LEARN);
+            chatStateRepository.deleteLastAnswerByChatId(chatId);
+            chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
+            return menuForCheckingKnowledge(chatId);
+        }
+        else {
+            return "Данные введены неверно. Нужно ввести /1 или /2";
+        }
+
+    }
+
+    private String checkUserForKnowledge(String chatId){
+        chatStateRepository.changeState(chatId, ChatStateRepository.State.SMTH);
+        var messege = "";
+        var term = chatStateRepository.getLastAnswer(chatId);
+        var definition = termRepository.getDefinitionToTerm(term)[1];
+        return term + " - " + definition + "\n" +
+                "Отправьте:\n" +
+                "/1 - да, я знаю его\n" +
+                "/2 - нет, я не знаю его";
+    }
 
     private String getAnswerToWrongTerm(String chatId, String userInput) {
         var message = "";
         if (userInput.equalsIgnoreCase("да") & chatStateRepository.containsAnswerByChatId(chatId)) {
-            message = checkUserInput(chatId, chatStateRepository.getIntendedAnswer(chatId));
-            chatStateRepository.deleteAnswerByChatId(chatId);
+            message = checkUserInput(chatId, chatStateRepository.getLastAnswer(chatId));
+            chatStateRepository.deleteLastAnswerByChatId(chatId);
         } else {
             message = checkUserInput(chatId, userInput);
         }
@@ -62,7 +118,7 @@ public class BotLogic {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.ERROR);
             var similarTerms = termRepository.getSimilarTerms(userInput);
             if (similarTerms.size() == 1) {
-                chatStateRepository.addIntendedAnswerByChatId(chatId, similarTerms.get(0));
+                chatStateRepository.addLastAnswerByChatId(chatId, similarTerms.get(0));
             }
             String message = "Мы не нашли такого определения. Вы имели ввиду это?\n\n" + similarTerms.get(0);
             for (var i = 1; i < similarTerms.size(); i++) {
@@ -82,9 +138,12 @@ public class BotLogic {
 
     private String menuToSelectTheMode = "Отправьте:\n" +
             "/help - вернуться меню\n" +
-            "/terms - посмотреть какие определения есть у бота";
+            "/terms - посмотреть какие определения есть у бота\n" +
+            "/check - проверить как хорошо вы знаете определения терминов. Проверка осущестляется в виде флеш-карт.";
 
     private String getDescriptionToBot() {
+
+
         return "Бот знает определения по дискретной математике 2 курса в институте.\n" +
                 "Он знает термины по таким темам как:\n" +
                 "   - теория множеств\n" +
