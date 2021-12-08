@@ -8,7 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ChatStateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChatStateRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GoogleSheetsRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GoogleSheetsRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TermRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TermRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/BotLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BotLogic.class" afterDir="false" />
     </list>
@@ -87,6 +88,7 @@
       <workItem from="1638381394290" duration="1214000" />
       <workItem from="1638431141746" duration="788000" />
       <workItem from="1638969486322" duration="8539000" />
+      <workItem from="1638991473978" duration="2850000" />
     </task>
     <servers />
   </component>

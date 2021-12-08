@@ -9,8 +9,7 @@ public class ChatStateRepository {
         NOT_LEARN,
         NOT_USE,
         CHECK,
-        SMTH
-
+        POLL
     }
 
     private Map<String, State> stateByChatId = new HashMap<>();
@@ -20,11 +19,17 @@ public class ChatStateRepository {
     private Map<String, Map<String, State>> historyOfTermsByChatId = new HashMap<>();
 
 
-    public void addChatIdForHistory(String chatId) {historyOfTermsByChatId.put(chatId, new HashMap<>());}
+    public void addChatIdForHistory(String chatId) {
+        historyOfTermsByChatId.put(chatId, new HashMap<>());
+    }
 
-    public void changeStateToTerm(String chatId, String term, State state) {historyOfTermsByChatId.get(chatId).put(term, state);}
+    public void changeStateToTerm(String chatId, String term, State state) {
+        historyOfTermsByChatId.get(chatId).put(term, state);
+    }
 
-    public State getStateToTerm(String chatId, String term) {return historyOfTermsByChatId.get(chatId).get(term);}
+    public State getStateToTerm(String chatId, String term) {
+        return historyOfTermsByChatId.get(chatId).get(term);
+    }
 
     public void addChatId(String chatId) {
         stateByChatId.put(chatId, State.SEARCH);

@@ -6,14 +6,12 @@ import java.util.Map;
 
 public class TermRepository {
     ArrayList<TermDefinition> termDefinition = new ArrayList<>();
-    private Map<String, String> dataFromCsvFile;
     private ErrorSearch errorSearch;
 
     public TermRepository(ErrorSearch errorSearch, Map<String, String> dataFromCsvFile) {
         this.errorSearch = errorSearch;
-        this.dataFromCsvFile = dataFromCsvFile;
-        for (var i : this.dataFromCsvFile.keySet())
-            add(i, this.dataFromCsvFile.get(i));
+        for (var i : dataFromCsvFile.keySet())
+            add(i, dataFromCsvFile.get(i));
     }
 
     private void add(String term, String definition) {
@@ -22,7 +20,7 @@ public class TermRepository {
         termDefinition.add(classTermDefinition);
     }
 
-    public ArrayList<String> getTerms(){
+    public ArrayList<String> getTerms() {
         ArrayList<String> terms = new ArrayList<>();
         for (var termAndDefinition : termDefinition)
             terms.add(termAndDefinition.getTerm());
