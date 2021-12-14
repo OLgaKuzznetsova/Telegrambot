@@ -62,6 +62,8 @@ public class BotLogic {
                         "Нажмите:\n" +
                         "/see - чтобы посмотреть определение.";
             }
+        }
+        for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateToTerm(chatId, term) == ChatStateRepository.State.NOT_LEARN) {
                 chatStateRepository.addLastAnswerByChatId(chatId, term);
                 return "Дайте определение этому термину:\n" +
@@ -70,6 +72,8 @@ public class BotLogic {
                         "Нажмите:\n" +
                         "/see - чтобы посмотреть определение.";
             }
+        }
+        for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateToTerm(chatId, term) == ChatStateRepository.State.LEARN) {
                 chatStateRepository.addLastAnswerByChatId(chatId, term);
                 return "Дайте определение этому термину:\n" +
