@@ -5,8 +5,8 @@ public class ChatStateRepository {
     public enum State {
         SEARCH,
         ERROR,
-        LEARN,
-        NOT_LEARN,
+        LEARNED,
+        UNLEARNED,
         NOT_USE,
         CHECK,
         POLL
@@ -23,11 +23,11 @@ public class ChatStateRepository {
         historyOfTermsByChatId.put(chatId, new HashMap<>());
     }
 
-    public void changeStateToTerm(String chatId, String term, State state) {
+    public void changeStateForTerm(String chatId, String term, State state) {
         historyOfTermsByChatId.get(chatId).put(term, state);
     }
 
-    public State getStateToTerm(String chatId, String term) {
+    public State getStateForTerm(String chatId, String term) {
         return historyOfTermsByChatId.get(chatId).get(term);
     }
 
