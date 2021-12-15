@@ -15,6 +15,7 @@ import java.util.List;
 
 
 public class TelegramBotApplication extends TelegramLongPollingBot {
+    private ButtonRepository buttonRepository = new ButtonRepository();
     private ChatStateRepository chatStateRepository;
     private BotLogic bot;
     private InlineKeyboard inlineKeyboard;
@@ -66,7 +67,9 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
                     messages.setChatId(currentChatId);
                     messages.setText(response);
 
-                    messages.setReplyMarkup(getInlineMessageButtons("Да", "Нет"));
+                    String button1 = buttonRepository.getStateForTerm(currentChatId, 0);
+                    String button2 = buttonRepository.getStateForTerm(currentChatId, 1);
+                    messages.setReplyMarkup(getInlineMessageButtons(button1, button2));
                     execute(messages);
 
                 }

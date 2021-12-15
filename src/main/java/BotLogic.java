@@ -1,6 +1,7 @@
 import java.util.List;
 
 public class BotLogic {
+    private ButtonRepository buttonRepository = new ButtonRepository();
     private ChatStateRepository chatStateRepository;
     private TermRepository termRepository;
 
@@ -114,10 +115,11 @@ public class BotLogic {
         chatStateRepository.changeState(chatId, ChatStateRepository.State.POLL);
         var term = chatStateRepository.getLastAnswer(chatId);
         var definition = termRepository.getDefinitionToTerm(term)[1];
+        buttonRepository.addChatIdForHistory(chatId);
+        buttonRepository.putButtonForChatID(chatId, 0, "Да");
+        buttonRepository.putButtonForChatID(chatId, 1, "Нет");
         return term + " - " + definition + "\n" +
-                "Отправьте:\n" +
-                "Да - да, я знаю его\n" +
-                "Нет - нет, я не знаю его";
+                "Вы знали это определение?\n";
     }
 
     private String getAnswerToWrongTerm(String chatId, String userInput) {
