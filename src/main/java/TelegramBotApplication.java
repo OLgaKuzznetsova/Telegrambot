@@ -2,6 +2,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -41,32 +42,38 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
 
         try {
-            if (!update.hasMessage()) {
-                return;
-            }
-            var message = update.getMessage();
-            var currentChatId = message.getChatId().toString();
-            var messageStr = message.getText();
+            Message message;
+            String currentChatId = "";
+            String messageStr = "";
             if (update.hasCallbackQuery()){
                 var call_data = update.getCallbackQuery().getData();
                 messageStr = call_data;
+                currentChatId = update.getCallbackQuery().getMessage().getChatId().toString();
+            }
+            if (update.hasMessage()) {
+                message = update.getMessage();
+                currentChatId = message.getChatId().toString();
+                messageStr = message.getText();
+            }
+            if (update.hasCallbackQuery() | update.hasMessage()){
+                var response = bot.handleUserInput(currentChatId, messageStr);
+
+                if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.NO) {
+                    execute(new SendMessage(currentChatId, response));
+                }
+                if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.YES) {
+                    SendMessage messages = new SendMessage();
+                    messages.setChatId(currentChatId);
+                    messages.setText(response);
+
+                    messages.setReplyMarkup(getInlineMessageButtons("Да", "Нет"));
+                    execute(messages);
+
+                }
+
             }
 
 
-            var response = bot.handleUserInput(currentChatId, messageStr);
-
-            if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.NO) {
-                execute(new SendMessage(currentChatId, response));
-            }
-            if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.YES) {
-                SendMessage messages = new SendMessage();
-                messages.setChatId(currentChatId);
-                messages.setText(response);
-
-                messages.setReplyMarkup(getInlineMessageButtons("Да", "Нет"));
-                execute(messages);
-
-            }
 
 
         } catch (Exception e) {
@@ -85,8 +92,8 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
         InlineKeyboardButton buttonNo = new InlineKeyboardButton();
         buttonYes.setText(name1);
         buttonNo.setText(name2);
-        buttonYes.setCallbackData("Yes");
-        buttonNo.setCallbackData("No");
+        buttonYes.setCallbackData("Да");
+        buttonNo.setCallbackData("Нет");
 
         List<InlineKeyboardButton> keyboardButtons = new ArrayList<>();
         keyboardButtons.add(buttonYes);
