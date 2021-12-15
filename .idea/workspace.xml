@@ -7,10 +7,15 @@
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChatStateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChatStateRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TelegramBotApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/BotLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BotLogic.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChatStateRepository$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChatStateRepository$State.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ChatStateRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ChatStateRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/InlineKeyboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/InlineKeyboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TelegramBotApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TelegramBotApplication.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +95,9 @@
       <workItem from="1638991473978" duration="2850000" />
       <workItem from="1639037590887" duration="2395000" />
       <workItem from="1639507780070" duration="1822000" />
+      <workItem from="1639510035749" duration="47000" />
+      <workItem from="1639569276388" duration="8796000" />
+      <workItem from="1639578868878" duration="2061000" />
     </task>
     <servers />
   </component>
