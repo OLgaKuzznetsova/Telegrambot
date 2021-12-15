@@ -7,24 +7,20 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class TelegramBotApplication extends TelegramLongPollingBot {
-    private ChatStateRepository chatStateRepository;
     private BotLogic bot;
-    private InlineKeyboard inlineKeyboard;
     String botUsername;
     String botToken;
-    public TelegramBotApplication(BotLogic bot, InlineKeyboard inlineKeyboard, String botUsername, String botToken, ChatStateRepository chatStateRepository) {
+
+    public TelegramBotApplication(BotLogic bot, String botUsername, String botToken) {
         this.botUsername = botUsername;
-        this.inlineKeyboard = inlineKeyboard;
         this.botToken = botToken;
         this.bot = bot;
-        this.chatStateRepository = chatStateRepository;
     }
 
     @Override
@@ -46,47 +42,32 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
             }
             var message = update.getMessage();
             var currentChatId = message.getChatId().toString();
-            var messageStr = message.getText();
-            if (update.hasCallbackQuery()){
-                var call_data = update.getCallbackQuery().getData();
-                messageStr = call_data;
-            }
-
-
-            var response = bot.handleUserInput(currentChatId, messageStr);
-
-            if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.NO) {
-                execute(new SendMessage(currentChatId, response));
-            }
-            if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.YES) {
-                SendMessage messages = new SendMessage();
-                messages.setChatId(currentChatId);
-                messages.setText(response);
-
-                messages.setReplyMarkup(getInlineMessageButtons("Да", "Нет"));
-                execute(messages);
-
-            }
-
+            var response = bot.handleUserInput(currentChatId, message.getText());
+            execute(new SendMessage(currentChatId, response));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    public BotApiMethod<?> hadleUpdate(Update update){
+        SendMessage replyMessage = null;
+        if (update.hasCallbackQuery()){
+            CallbackQuery callbackQuery = update.getCallbackQuery();
+        }
+        return null;
+    }
 
 
 
-
-    private InlineKeyboardMarkup getInlineMessageButtons(String name1, String name2){
+    private InlineKeyboardMarkup getInlineMessageButtons(){
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
+        InlineKeyboardButton buttonYes;
+        buttonYes = new InlineKeyboardButton().setText("Да");
+        InlineKeyboardButton buttonNo = new InlineKeyboardButton().setText("Нет");
 
-        InlineKeyboardButton buttonYes =  new InlineKeyboardButton();
-        InlineKeyboardButton buttonNo = new InlineKeyboardButton();
-        buttonYes.setText(name1);
-        buttonNo.setText(name2);
-        buttonYes.setCallbackData("Yes");
-        buttonNo.setCallbackData("No");
+        buttonYes.setCallbackData("buttonYes");
+        buttonNo.setCallbackData("buttonNo");
 
         List<InlineKeyboardButton> keyboardButtons = new ArrayList<>();
         keyboardButtons.add(buttonYes);

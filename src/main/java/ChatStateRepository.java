@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChatStateRepository {
@@ -11,16 +9,8 @@ public class ChatStateRepository {
         NOT_LEARN,
         NOT_USE,
         CHECK,
-        POLL,
-        YES,
-        NO
+        POLL
     }
-    private Map<String, State> buttonByChatId = new HashMap<>();
-
-    public void changeStateToButton(String chatId, State state){ buttonByChatId.put(chatId, state); }
-
-    public State getStateNeedButton(String chatId){return buttonByChatId.get(chatId);}
-
 
     private Map<String, State> stateByChatId = new HashMap<>();
 
