@@ -6,8 +6,8 @@ public class ChatStateRepository {
         SEARCH,
         ERROR,
         CHECK,
-        POLLCHECK,
-        POLREPEAT,
+        POLL,
+        REDIRECT,
         REPEAT
     }
     public enum TermState {

@@ -33,12 +33,12 @@ public class BotLogic {
 
         if (userInput.equalsIgnoreCase("/see") &
                 chatStateRepository.getState(chatId) == ChatStateRepository.UserState.CHECK) {
-            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.POLLCHECK);
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.POLL);
             return checkUserForKnowledge(chatId);
         }
         if (userInput.equalsIgnoreCase("/see") &
                 chatStateRepository.getState(chatId) == ChatStateRepository.UserState.REPEAT) {
-            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.POLLCHECK);
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REDIRECT);
             return checkUserForKnowledge(chatId);
         }
 
@@ -50,8 +50,8 @@ public class BotLogic {
             chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REPEAT);
             return menuForRepetitionOfTerms(chatId);
         }
-        if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLLCHECK
-                | chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLREPEAT) {
+        if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLL
+                | chatStateRepository.getState(chatId) == ChatStateRepository.UserState.REDIRECT) {
             return changeStateToAnswer(chatId, userInput);
         }
 
@@ -135,16 +135,20 @@ public class BotLogic {
         if (userInput.equalsIgnoreCase("Да")) {
             chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.TermState.LEARNED);
             chatStateRepository.deleteLastAnswerByChatId(chatId);
-            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
-            if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLLCHECK)
+            if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLL) {
+                chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
                 return menuForCheckingKnowledge(chatId);
+            }
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REPEAT);
             return  menuForRepetitionOfTerms(chatId);
         } else if (userInput.equalsIgnoreCase("Нет")) {
             chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.TermState.UNLEARNED);
             chatStateRepository.deleteLastAnswerByChatId(chatId);
-            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
-            if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLLCHECK)
+            if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLL) {
+                chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
                 return menuForCheckingKnowledge(chatId);
+            }
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REPEAT);
             return  menuForRepetitionOfTerms(chatId);
         } else {
             return new Response("Данные введены неверно. Нужно ввести да или нет", null);
