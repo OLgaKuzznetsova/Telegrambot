@@ -39,6 +39,10 @@ public class BotLogic {
             chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
             return new Response(menuForCheckingKnowledge(chatId), null);
         }
+        if (userInput.equalsIgnoreCase("/repeat")) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
+            return new Response(menuForRepetitionOfTerms(chatId), null);
+        }
         if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLL) {
             return new Response(changeStateToAnswer(chatId, userInput), null);
         }
@@ -59,7 +63,7 @@ public class BotLogic {
     private String menuForCheckingKnowledge(long chatId) {
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.UNUSED) {
-                chatStateRepository.addLastAnswerByChatId(chatId, term);
+                chatStateRepository.lastUsedTerm(chatId, term);
                 return "Дайте определение этому термину:\n" +
                         term +
                         "\n\n" +
@@ -67,10 +71,16 @@ public class BotLogic {
                         "/see - чтобы посмотреть определение.";
             }
         }
+        return "Поздравляю! Вы узнали всю базу определений нашего бота.\n" +
+                "Хотите повторить всё снова, нажмите /repeat";
+    }
+
+    private String menuForRepetitionOfTerms(long chatId) {
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.UNLEARNED) {
-                chatStateRepository.addLastAnswerByChatId(chatId, term);
-                return "Дайте определение этому термину:\n" +
+                chatStateRepository.lastUsedTerm(chatId, term);
+                return  "Вы раньше не знали этот термин.\n" +
+                        "Попробуйте дать определение этому термину сейчас:\n" +
                         term +
                         "\n\n" +
                         "Нажмите:\n" +
@@ -79,8 +89,10 @@ public class BotLogic {
         }
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.LEARNED) {
-                chatStateRepository.addLastAnswerByChatId(chatId, term);
-                return "Дайте определение этому термину:\n" +
+                chatStateRepository.lastUsedTerm(chatId, term);
+                return  "Повторение - мать учения.\n" +
+                        "Вы повторили невыученные термины, пора повторять выученные!\n" +
+                        "Дайте определение этому термину:\n" +
                         term +
                         "\n\n" +
                         "Нажмите:\n" +
@@ -156,7 +168,7 @@ public class BotLogic {
             chatStateRepository.changeState(chatId, ChatStateRepository.UserState.ERROR);
             var similarTerms = termRepository.getSimilarTerms(userInput);
             if (similarTerms.size() == 1) {
-                chatStateRepository.addLastAnswerByChatId(chatId, similarTerms.get(0));
+                chatStateRepository.lastUsedTerm(chatId, similarTerms.get(0));
             }
             String message = "Мы не нашли такого определения. Вы имели ввиду это?\n\n" + similarTerms.get(0);
             for (var i = 1; i < similarTerms.size(); i++) {
@@ -177,7 +189,8 @@ public class BotLogic {
     private String menuToSelectTheMode = "Отправьте:\n" +
             "/help - вернуться меню\n" +
             "/terms - посмотреть какие определения есть у бота\n" +
-            "/check - проверить как хорошо вы знаете определения терминов. Проверка осущестляется в виде флеш-карт.";
+            "/check - проверить как хорошо вы знаете определения терминов. Проверка осущестляется в виде флеш-карт.\n" +
+            "/repeat - повторить термины, которые вы не знали";
 
     private String getDescriptionToBot() {
 

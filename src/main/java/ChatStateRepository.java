@@ -22,7 +22,7 @@ public class ChatStateRepository {
 
 
     public void addChatIdForHistory(long chatId) {
-        historyOfTermsByChatId.put(chatId, new HashMap<Object, Object>());
+        historyOfTermsByChatId.put(chatId, new HashMap<>());
     }
 
     public void changeStateForTerm(long chatId, String term, TermState state) {
@@ -49,7 +49,7 @@ public class ChatStateRepository {
         return stateByChatId.containsKey(chatId);
     }
 
-    public void addLastAnswerByChatId(long chatId, String intendedAnswer) {
+    public void lastUsedTerm(long chatId, String intendedAnswer) {
         lastAnswerByChatId.put(chatId, intendedAnswer);
     }
 
