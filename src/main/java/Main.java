@@ -20,9 +20,8 @@ public class Main {
         var botLogic = new BotLogic(dialogStates, termRepository);
         var botUsername = System.getenv("BOT_USERNAME");
         var botToken = System.getenv("BOT_TOKEN");
-        var inlineKeyboard = new InlineKeyboard();
 
-        var telegramBot = new TelegramBotApplication(botLogic, inlineKeyboard, botUsername, botToken);
+        var telegramBot = new TelegramBotApplication(botLogic, botUsername, botToken);
         try {
             var botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(telegramBot);
