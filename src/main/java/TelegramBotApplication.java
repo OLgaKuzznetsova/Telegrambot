@@ -1,111 +1,120 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class TelegramBotApplication extends TelegramLongPollingBot {
-    private ButtonRepository buttonRepository = new ButtonRepository();
-    private ChatStateRepository chatStateRepository;
     private BotLogic bot;
-    private InlineKeyboard inlineKeyboard;
-    String botUsername;
-    String botToken;
-    public TelegramBotApplication(BotLogic bot, InlineKeyboard inlineKeyboard, String botUsername, String botToken, ChatStateRepository chatStateRepository) {
+    private String botUsername;
+    private String botToken;
+
+    public TelegramBotApplication(BotLogic bot, String botUsername, String botToken)
+    {
         this.botUsername = botUsername;
-        this.inlineKeyboard = inlineKeyboard;
         this.botToken = botToken;
         this.bot = bot;
-        this.chatStateRepository = chatStateRepository;
     }
 
     @Override
-    public String getBotUsername() {
-        return botUsername;
-    }
+    public void onUpdateReceived(Update update)
+    {
+        try
+        {
+            long currentChatId;
+            Response response;
 
-    @Override
-    public String getBotToken() {
-        return botToken;
-    }
 
-    @Override
-    public void onUpdateReceived(Update update) {
+            if (update.hasMessage())
+            {
+                var message = update.getMessage();
+                currentChatId = message.getChatId();
 
-        try {
-            Message message;
-            String currentChatId = "";
-            String messageStr = "";
-            if (update.hasCallbackQuery()){
-                var call_data = update.getCallbackQuery().getData();
-                messageStr = call_data;
-                currentChatId = update.getCallbackQuery().getMessage().getChatId().toString();
+                response = bot.handleUserInput(currentChatId, message.getText());
             }
-            if (update.hasMessage()) {
-                message = update.getMessage();
-                currentChatId = message.getChatId().toString();
-                messageStr = message.getText();
+            else if (update.hasCallbackQuery())
+            {
+                var callbackQuery = update.getCallbackQuery();
+                currentChatId = callbackQuery.getMessage().getChatId();
+                response = bot.handleUserInput(currentChatId, callbackQuery.getData());
             }
-            if (update.hasCallbackQuery() | update.hasMessage()){
-                var response = bot.handleUserInput(currentChatId, messageStr);
-
-                if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.NO) {
-                    execute(new SendMessage(currentChatId, response));
-                }
-                if (chatStateRepository.getStateNeedButton(currentChatId) == ChatStateRepository.State.YES) {
-                    SendMessage messages = new SendMessage();
-                    messages.setChatId(currentChatId);
-                    messages.setText(response);
-
-                    String button1 = buttonRepository.getStateForTerm(currentChatId, 0);
-                    String button2 = buttonRepository.getStateForTerm(currentChatId, 1);
-                    messages.setReplyMarkup(getInlineMessageButtons(button1, button2));
-                    execute(messages);
-
-                }
-
+            else
+            {
+                throw new Exception("No data found");
             }
 
+            InlineKeyboardMarkup inlineKeyboard = null;
+            if (response.getKeyboardMarkup() != null)
+            {
+                inlineKeyboard = new InlineKeyboardMarkup();
+                inlineKeyboard.setKeyboard(setInlineKeyboardMarkup(response.getKeyboardMarkup()));
+            }
 
-
-
-        } catch (Exception e) {
+            sendResponse(currentChatId, response.getMessageText(), inlineKeyboard);
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
+    private void sendResponse(Long chatId, String msgText,
+                              InlineKeyboardMarkup inlineKeyboard)
+    {
+        var sender = new SendMessage();
+        sender.setChatId(chatId.toString());
+        sender.setText(msgText);
 
+        if (inlineKeyboard != null)
+        {
+            sender.setReplyMarkup(inlineKeyboard);
+        }
 
+        try
+        {
+            execute(sender);
+        }
+        catch (TelegramApiException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-    private InlineKeyboardMarkup getInlineMessageButtons(String name1, String name2){
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+    private List<List<InlineKeyboardButton>> setInlineKeyboardMarkup(LinkedList<KeyboardButton> keyboardButtons)
+    {
+        var keyboardArray = new ArrayList<List<InlineKeyboardButton>>();
 
+        for (var button :
+                keyboardButtons)
+        {
+            var row = new ArrayList<InlineKeyboardButton>();
+            var inlineKeyboardButton = new InlineKeyboardButton();
 
-        InlineKeyboardButton buttonYes =  new InlineKeyboardButton();
-        InlineKeyboardButton buttonNo = new InlineKeyboardButton();
-        buttonYes.setText(name1);
-        buttonNo.setText(name2);
-        buttonYes.setCallbackData("Да");
-        buttonNo.setCallbackData("Нет");
+            inlineKeyboardButton.setText(button.getText());
+            inlineKeyboardButton.setCallbackData(button.getCallbackData());
 
-        List<InlineKeyboardButton> keyboardButtons = new ArrayList<>();
-        keyboardButtons.add(buttonYes);
-        keyboardButtons.add(buttonNo);
-        List<List<InlineKeyboardButton>> rowlist = new ArrayList<>();
-        rowlist.add(keyboardButtons);
+            row.add(inlineKeyboardButton);
+            keyboardArray.add(row);
+        }
 
-        inlineKeyboardMarkup.setKeyboard(rowlist);
+        return keyboardArray;
+    }
 
-        return inlineKeyboardMarkup;
+    @Override
+    public String getBotUsername()
+    {
+        return botUsername;
+    }
+
+    @Override
+    public String getBotToken()
+    {
+        return botToken;
     }
 }
