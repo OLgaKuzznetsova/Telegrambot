@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class BotLogic {
     private ChatStateRepository chatStateRepository;
     private TermRepository termRepository;
@@ -7,7 +9,11 @@ public class BotLogic {
         this.termRepository = termRepository;
     }
 
+
+
     public String handleUserInput(String chatId, String userInput) {
+
+        chatStateRepository.changeStateToButton(chatId, ChatStateRepository.State.NO);
         if (userInput.equals("/start")) {
             return mainMenu();
         }
@@ -15,11 +21,12 @@ public class BotLogic {
             chatStateRepository.addChatId(chatId);
             chatStateRepository.addChatIdForHistory(chatId);
             for (var term : termRepository.getTerms()) {
-                chatStateRepository.changeStateToTerm(chatId, term, ChatStateRepository.State.NOT_USE);
+                chatStateRepository.changeStateForTerm(chatId, term, ChatStateRepository.State.NOT_USE);
             }
         }
         if (userInput.equalsIgnoreCase("/terms")) {
             chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
+
             return getDescriptionToBot();
         }
         if (userInput.equalsIgnoreCase("/help")) {
@@ -54,7 +61,7 @@ public class BotLogic {
 
     private String menuForCheckingKnowledge(String chatId) {
         for (var term : termRepository.getTerms()) {
-            if (chatStateRepository.getStateToTerm(chatId, term) == ChatStateRepository.State.NOT_USE) {
+            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.State.NOT_USE) {
                 chatStateRepository.addLastAnswerByChatId(chatId, term);
                 return "Дайте определение этому термину:\n" +
                         term +
@@ -64,7 +71,7 @@ public class BotLogic {
             }
         }
         for (var term : termRepository.getTerms()) {
-            if (chatStateRepository.getStateToTerm(chatId, term) == ChatStateRepository.State.NOT_LEARN) {
+            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.State.UNLEARNED) {
                 chatStateRepository.addLastAnswerByChatId(chatId, term);
                 return "Дайте определение этому термину:\n" +
                         term +
@@ -74,7 +81,7 @@ public class BotLogic {
             }
         }
         for (var term : termRepository.getTerms()) {
-            if (chatStateRepository.getStateToTerm(chatId, term) == ChatStateRepository.State.LEARN) {
+            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.State.LEARNED) {
                 chatStateRepository.addLastAnswerByChatId(chatId, term);
                 return "Дайте определение этому термину:\n" +
                         term +
@@ -87,13 +94,13 @@ public class BotLogic {
     }
 
     private String changeStateToAnswer(String chatId, String userInput) {
-        if (userInput.equalsIgnoreCase("/1")) {
-            chatStateRepository.changeStateToTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.LEARN);
+        if (userInput.equalsIgnoreCase("Да")) {
+            chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.LEARNED);
             chatStateRepository.deleteLastAnswerByChatId(chatId);
             chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
             return menuForCheckingKnowledge(chatId);
-        } else if (userInput.equalsIgnoreCase("/2")) {
-            chatStateRepository.changeStateToTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.NOT_LEARN);
+        } else if (userInput.equalsIgnoreCase("Нет")) {
+            chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.UNLEARNED);
             chatStateRepository.deleteLastAnswerByChatId(chatId);
             chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
             return menuForCheckingKnowledge(chatId);
@@ -103,13 +110,14 @@ public class BotLogic {
     }
 
     private String checkUserForKnowledge(String chatId) {
+        chatStateRepository.changeStateToButton(chatId, ChatStateRepository.State.YES);
         chatStateRepository.changeState(chatId, ChatStateRepository.State.POLL);
         var term = chatStateRepository.getLastAnswer(chatId);
         var definition = termRepository.getDefinitionToTerm(term)[1];
         return term + " - " + definition + "\n" +
                 "Отправьте:\n" +
-                "/1 - да, я знаю его\n" +
-                "/2 - нет, я не знаю его";
+                "Да - да, я знаю его\n" +
+                "Нет - нет, я не знаю его";
     }
 
     private String getAnswerToWrongTerm(String chatId, String userInput) {
