@@ -12,15 +12,9 @@ public class Response
         this.keyboardMarkup = keyboardMarkup;
     }
 
-
     public String getMessageText()
     {
         return messageText;
-    }
-
-    public void setMessageText(String messageText)
-    {
-        this.messageText = messageText;
     }
 
     public LinkedList<KeyboardButton> getKeyboardMarkup()
@@ -28,9 +22,5 @@ public class Response
         return keyboardMarkup;
     }
 
-    public void setKeyboardMarkup(LinkedList<KeyboardButton> keyboardMarkup)
-    {
-        this.keyboardMarkup = keyboardMarkup;
-    }
 }
 

@@ -1,16 +1,16 @@
-public class KeyboardButton
-{
+public class KeyboardButton {
     private String text;
     private String callbackData;
+
+    public KeyboardButton(String text, String callbackData)
+    {
+        this.text = text;
+        this.callbackData = callbackData;
+    }
 
     public String getText()
     {
         return text;
-    }
-
-    public void setText(String text)
-    {
-        this.text = text;
     }
 
     public String getCallbackData()
@@ -18,8 +18,4 @@ public class KeyboardButton
         return callbackData;
     }
 
-    public void setCallbackData(String callbackData)
-    {
-        this.callbackData = callbackData;
-    }
 }

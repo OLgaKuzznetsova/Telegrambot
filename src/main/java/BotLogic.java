@@ -77,31 +77,25 @@ public class BotLogic {
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.UNUSED) {
                 chatStateRepository.lastUsedTerm(chatId, term);
-                return addButtonSee(term);
+                return menuForFlashcards(term);
 
             }
         }
         var answer = "Поздравляю! Вы узнали всю базу определений нашего бота.\n" +
                       "Хотите повторить всё снова?";
         var keyboardButtons = new LinkedList<KeyboardButton>();
-        var buttonRepeat = new KeyboardButton();
-        buttonRepeat.setText("повторить определения");
-        buttonRepeat.setCallbackData("/repeat");
+        var buttonRepeat = new KeyboardButton("повторить определения", "/repeat");
         keyboardButtons.add(buttonRepeat);
         return new Response(answer, keyboardButtons);
-        //return "Поздравляю! Вы узнали всю базу определений нашего бота.\n" +
-          //      "Хотите повторить всё снова, нажмите /repeat";
     }
 
-    private Response addButtonSee(String term){
+    private Response menuForFlashcards(String term){
         var answer = "Дайте определение этому термину:\n" +
                 term +
                 "\n\n";
         var keyboardButtons = new LinkedList<KeyboardButton>();
-        var buttonYes = new KeyboardButton();
-        buttonYes.setText("посмотреть определение");
-        buttonYes.setCallbackData("/see");
-        keyboardButtons.add(buttonYes);
+        var buttonSee = new KeyboardButton("посмотреть определение", "/see");
+        keyboardButtons.add(buttonSee);
         return new Response(answer, keyboardButtons);
     }
 
@@ -109,19 +103,17 @@ public class BotLogic {
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.UNLEARNED) {
                 chatStateRepository.lastUsedTerm(chatId, term);
-                return addButtonSee(term);
+                return menuForFlashcards(term);
             }
         }
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.LEARNED) {
                 chatStateRepository.lastUsedTerm(chatId, term);
-                return addButtonSee(term);
+                return menuForFlashcards(term);
             }
         }
         var keyboardButtons = new LinkedList<KeyboardButton>();
-        var buttonCheck = new KeyboardButton();
-        buttonCheck.setText("начать изучение терминов");
-        buttonCheck.setCallbackData("/check");
+        var buttonCheck = new KeyboardButton("начать изучение терминов", "/check");
         keyboardButtons.add(buttonCheck);
         return new Response("Вы еще не выучили ни одного термина", keyboardButtons);
     }
@@ -155,13 +147,9 @@ public class BotLogic {
         var answer = term + " - " + definition + "\n" +
                 "Вы знали это определение?\n";
         var keyboardButtons = new LinkedList<KeyboardButton>();
-        var buttonYes = new KeyboardButton();
-        buttonYes.setText("да");
-        buttonYes.setCallbackData("да");
+        var buttonYes = new KeyboardButton("да", "да");
         keyboardButtons.add(buttonYes);
-        var buttonNo = new KeyboardButton();
-        buttonNo.setText("нет");
-        buttonNo.setCallbackData("нет");
+        var buttonNo = new KeyboardButton("нет", "нет");
         keyboardButtons.add(buttonNo);
         return new Response(answer, keyboardButtons);
 

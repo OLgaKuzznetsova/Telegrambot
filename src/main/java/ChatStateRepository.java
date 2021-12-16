@@ -16,11 +16,11 @@ public class ChatStateRepository {
         UNUSED
     }
 
-    private Map<Long, UserState> stateByChatId = new HashMap<Long, UserState>();
+    private Map<Long, UserState> stateByChatId = new HashMap<>();
 
-    private Map<Long, String> lastAnswerByChatId = new HashMap<Long, String>();
+    private Map<Long, String> lastAnswerByChatId = new HashMap<>();
 
-    private Map<Long, HashMap<Object, Object>> historyOfTermsByChatId = new HashMap<Long, HashMap<Object, Object>>();
+    private Map<Long, HashMap<Object, Object>> historyOfTermsByChatId = new HashMap<>();
 
 
     public void addChatIdForHistory(long chatId) {
