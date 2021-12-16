@@ -1,75 +1,69 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChatStateRepository {
-    public enum State {
+    public enum UserState {
         SEARCH,
         ERROR,
-        LEARNED,
-        UNLEARNED,
-        NOT_USE,
         CHECK,
         POLL,
-        YES,
-        NO
+        REDIRECT,
+        REPEAT
     }
-    private Map<String, State> buttonByChatId = new HashMap<>();
+    public enum TermState {
+        LEARNED,
+        UNLEARNED,
+        UNUSED
+    }
 
-    public void changeStateToButton(String chatId, State state){ buttonByChatId.put(chatId, state); }
+    private Map<Long, UserState> stateByChatId = new HashMap<>();
 
-    public State getStateNeedButton(String chatId){return buttonByChatId.get(chatId);}
+    private Map<Long, String> lastAnswerByChatId = new HashMap<>();
 
-
-    private Map<String, State> stateByChatId = new HashMap<>();
-
-    private Map<String, String> lastAnswerByChatId = new HashMap<>();
-
-    private Map<String, Map<String, State>> historyOfTermsByChatId = new HashMap<>();
+    private Map<Long, HashMap<Object, Object>> historyOfTermsByChatId = new HashMap<>();
 
 
-    public void addChatIdForHistory(String chatId) {
+    public void addChatIdForHistory(long chatId) {
         historyOfTermsByChatId.put(chatId, new HashMap<>());
     }
 
-    public void changeStateForTerm(String chatId, String term, State state) {
+    public void changeStateForTerm(long chatId, String term, TermState state) {
         historyOfTermsByChatId.get(chatId).put(term, state);
     }
 
-    public State getStateForTerm(String chatId, String term) {
+    public Object getStateForTerm(long chatId, String term) {
         return historyOfTermsByChatId.get(chatId).get(term);
     }
 
-    public void addChatId(String chatId) {
-        stateByChatId.put(chatId, State.SEARCH);
+    public void addChatId(long chatId) {
+        stateByChatId.put(chatId, UserState.SEARCH);
     }
 
-    public void changeState(String chatId, State state) {
+    public void changeState(long chatId, UserState state) {
         stateByChatId.replace(chatId, state);
     }
 
-    public State getState(String chatId) {
+    public UserState getState(long chatId) {
         return stateByChatId.get(chatId);
     }
 
-    public boolean containsChatId(String chatId) {
+    public boolean containsChatId(long chatId) {
         return stateByChatId.containsKey(chatId);
     }
 
-    public void addLastAnswerByChatId(String chatId, String intendedAnswer) {
+    public void lastUsedTerm(long chatId, String intendedAnswer) {
         lastAnswerByChatId.put(chatId, intendedAnswer);
     }
 
-    public String getLastAnswer(String chatId) {
+    public String getLastAnswer(long chatId) {
         return lastAnswerByChatId.get(chatId);
     }
 
-    public boolean containsAnswerByChatId(String chatId) {
+    public boolean containsAnswerByChatId(long chatId) {
         return lastAnswerByChatId.containsKey(chatId);
     }
 
-    public void deleteLastAnswerByChatId(String chatId) {
+    public void deleteLastAnswerByChatId(long chatId) {
         lastAnswerByChatId.remove(chatId);
     }
 

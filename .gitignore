@@ -1,6 +1,6 @@
 
-target/classes/credentials.json
-src/main/resources/credentials.json
-target/classes/credentials.json
-target/classes/credentials.json
-src/main/resources/credentials.json
+/target/classes/
+/target/
+target/classes/BotLogic.class
+*.class
+.idea/workspace.xml

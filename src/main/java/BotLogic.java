@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.LinkedList;
 
 public class BotLogic {
     private ChatStateRepository chatStateRepository;
@@ -9,118 +9,153 @@ public class BotLogic {
         this.termRepository = termRepository;
     }
 
+    public Response handleUserInput(long chatId, String userInput) {
 
-
-    public String handleUserInput(String chatId, String userInput) {
-
-        chatStateRepository.changeStateToButton(chatId, ChatStateRepository.State.NO);
         if (userInput.equals("/start")) {
-            return mainMenu();
+            return new Response(mainMenu(), null);
         }
         if (!chatStateRepository.containsChatId(chatId)) {
             chatStateRepository.addChatId(chatId);
             chatStateRepository.addChatIdForHistory(chatId);
             for (var term : termRepository.getTerms()) {
-                chatStateRepository.changeStateForTerm(chatId, term, ChatStateRepository.State.NOT_USE);
+                chatStateRepository.changeStateForTerm(chatId, term, ChatStateRepository.TermState.UNUSED);
             }
         }
-        if (userInput.equalsIgnoreCase("/terms")) {
-            chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
 
-            return getDescriptionToBot();
+        if (userInput.equalsIgnoreCase("/find")) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.SEARCH);
+            return new Response("Введите термин, определение которого вы хотите узнать", null);
+        }
+        if (userInput.equalsIgnoreCase("/terms")) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.SEARCH);
+
+            return new Response(getDescriptionToBot(), null);
         }
         if (userInput.equalsIgnoreCase("/help")) {
-            chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
-            return menuToSelectTheMode;
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.SEARCH);
+            return new Response(menuToSelectTheMode, null);
         }
 
         if (userInput.equalsIgnoreCase("/see") &
-                chatStateRepository.getState(chatId) == ChatStateRepository.State.CHECK) {
+                chatStateRepository.getState(chatId) == ChatStateRepository.UserState.CHECK) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.POLL);
             return checkUserForKnowledge(chatId);
         }
+        if (userInput.equalsIgnoreCase("/see") &
+                chatStateRepository.getState(chatId) == ChatStateRepository.UserState.REPEAT) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REDIRECT);
+            return checkUserForKnowledge(chatId);
+        }
+
         if (userInput.equalsIgnoreCase("/check")) {
-            chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
             return menuForCheckingKnowledge(chatId);
         }
-        if (chatStateRepository.getState(chatId) == ChatStateRepository.State.POLL) {
+        if (userInput.equalsIgnoreCase("/repeat")) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REPEAT);
+            return menuForRepetitionOfTerms(chatId);
+        }
+        if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLL
+                | chatStateRepository.getState(chatId) == ChatStateRepository.UserState.REDIRECT) {
             return changeStateToAnswer(chatId, userInput);
         }
 
-        if (chatStateRepository.getState(chatId) == ChatStateRepository.State.SEARCH) {
-            return checkUserInput(chatId, userInput);
+        if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.SEARCH) {
+            return new Response(checkUserInput(chatId, userInput), null);
         }
 
 
-        if (chatStateRepository.getState(chatId) == ChatStateRepository.State.ERROR) {
-            chatStateRepository.changeState(chatId, ChatStateRepository.State.SEARCH);
-            return getAnswerToWrongTerm(chatId, userInput);
+        if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.ERROR) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.SEARCH);
+            return new Response(getAnswerToWrongTerm(chatId, userInput), null);
         }
 
-        return "Данные введены неверно";
+        return new Response("Данные введены неверно", null);
     }
 
-    private String menuForCheckingKnowledge(String chatId) {
+    private Response menuForCheckingKnowledge(long chatId) {
         for (var term : termRepository.getTerms()) {
-            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.State.NOT_USE) {
-                chatStateRepository.addLastAnswerByChatId(chatId, term);
-                return "Дайте определение этому термину:\n" +
-                        term +
-                        "\n\n" +
-                        "Нажмите:\n" +
-                        "/see - чтобы посмотреть определение.";
+            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.UNUSED) {
+                chatStateRepository.lastUsedTerm(chatId, term);
+                return menuForFlashcards(term);
+
             }
         }
-        for (var term : termRepository.getTerms()) {
-            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.State.UNLEARNED) {
-                chatStateRepository.addLastAnswerByChatId(chatId, term);
-                return "Дайте определение этому термину:\n" +
-                        term +
-                        "\n\n" +
-                        "Нажмите:\n" +
-                        "/see - чтобы посмотреть определение.";
-            }
-        }
-        for (var term : termRepository.getTerms()) {
-            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.State.LEARNED) {
-                chatStateRepository.addLastAnswerByChatId(chatId, term);
-                return "Дайте определение этому термину:\n" +
-                        term +
-                        "\n\n" +
-                        "Нажмите:\n" +
-                        "/see - чтобы посмотреть определение.";
-            }
-        }
-        return "";
+        var answer = "Поздравляю! Вы узнали всю базу определений нашего бота.\n" +
+                      "Хотите повторить всё снова?";
+        var keyboardButtons = new LinkedList<KeyboardButton>();
+        var buttonRepeat = new KeyboardButton("повторить определения", "/repeat");
+        keyboardButtons.add(buttonRepeat);
+        return new Response(answer, keyboardButtons);
     }
 
-    private String changeStateToAnswer(String chatId, String userInput) {
+    private Response menuForFlashcards(String term){
+        var answer = "Дайте определение этому термину:\n" +
+                term +
+                "\n\n";
+        var keyboardButtons = new LinkedList<KeyboardButton>();
+        var buttonSee = new KeyboardButton("посмотреть определение", "/see");
+        keyboardButtons.add(buttonSee);
+        return new Response(answer, keyboardButtons);
+    }
+
+    private Response menuForRepetitionOfTerms(long chatId) {
+        for (var term : termRepository.getTerms()) {
+            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.UNLEARNED) {
+                chatStateRepository.lastUsedTerm(chatId, term);
+                return menuForFlashcards(term);
+            }
+        }
+        for (var term : termRepository.getTerms()) {
+            if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.LEARNED) {
+                chatStateRepository.lastUsedTerm(chatId, term);
+                return menuForFlashcards(term);
+            }
+        }
+        var keyboardButtons = new LinkedList<KeyboardButton>();
+        var buttonCheck = new KeyboardButton("начать изучение терминов", "/check");
+        keyboardButtons.add(buttonCheck);
+        return new Response("Вы еще не выучили ни одного термина", keyboardButtons);
+    }
+
+    private Response changeStateToAnswer(long chatId, String userInput) {
         if (userInput.equalsIgnoreCase("Да")) {
-            chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.LEARNED);
-            chatStateRepository.deleteLastAnswerByChatId(chatId);
-            chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
-            return menuForCheckingKnowledge(chatId);
+            chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.TermState.LEARNED);
+            return changeState(chatId);
         } else if (userInput.equalsIgnoreCase("Нет")) {
-            chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.State.UNLEARNED);
-            chatStateRepository.deleteLastAnswerByChatId(chatId);
-            chatStateRepository.changeState(chatId, ChatStateRepository.State.CHECK);
-            return menuForCheckingKnowledge(chatId);
+            chatStateRepository.changeStateForTerm(chatId, chatStateRepository.getLastAnswer(chatId), ChatStateRepository.TermState.UNLEARNED);
+            return changeState(chatId);
         } else {
-            return "Данные введены неверно. Нужно ввести /1 или /2";
+            return new Response("Данные введены неверно. Нужно ввести да или нет", null);
         }
     }
 
-    private String checkUserForKnowledge(String chatId) {
-        chatStateRepository.changeStateToButton(chatId, ChatStateRepository.State.YES);
-        chatStateRepository.changeState(chatId, ChatStateRepository.State.POLL);
+    private Response changeState(Long chatId){
+        chatStateRepository.deleteLastAnswerByChatId(chatId);
+        if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLL) {
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.CHECK);
+            return menuForCheckingKnowledge(chatId);
+        }
+        chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REPEAT);
+        return  menuForRepetitionOfTerms(chatId);
+    }
+
+    private Response checkUserForKnowledge(long chatId) {
+
         var term = chatStateRepository.getLastAnswer(chatId);
         var definition = termRepository.getDefinitionToTerm(term)[1];
-        return term + " - " + definition + "\n" +
-                "Отправьте:\n" +
-                "Да - да, я знаю его\n" +
-                "Нет - нет, я не знаю его";
+        var answer = term + " - " + definition + "\n" +
+                "Вы знали это определение?\n";
+        var keyboardButtons = new LinkedList<KeyboardButton>();
+        var buttonYes = new KeyboardButton("да", "да");
+        keyboardButtons.add(buttonYes);
+        var buttonNo = new KeyboardButton("нет", "нет");
+        keyboardButtons.add(buttonNo);
+        return new Response(answer, keyboardButtons);
+
     }
 
-    private String getAnswerToWrongTerm(String chatId, String userInput) {
+    private String getAnswerToWrongTerm(long chatId, String userInput) {
         var message = "";
         if ((userInput.equalsIgnoreCase("да")
                 | userInput.equalsIgnoreCase("ага")
@@ -138,20 +173,20 @@ public class BotLogic {
 
     }
 
-    private String checkUserInput(String chatId, String userInput) {
+    private String checkUserInput(long chatId, String userInput) {
         if (userInput.matches("[а-яА-ЯёЁ ]+")) {
             return getDefinitionToTerm(chatId, userInput);
         }
         return "Данные введены неверно. Если вы забыли как пользоваться ботом введите /help";
     }
 
-    private String getDefinitionToTerm(String chatId, String userInput) {
+    private String getDefinitionToTerm(long chatId, String userInput) {
         var res = termRepository.getDefinitionToTerm(userInput);
         if (res == null) {
-            chatStateRepository.changeState(chatId, ChatStateRepository.State.ERROR);
+            chatStateRepository.changeState(chatId, ChatStateRepository.UserState.ERROR);
             var similarTerms = termRepository.getSimilarTerms(userInput);
             if (similarTerms.size() == 1) {
-                chatStateRepository.addLastAnswerByChatId(chatId, similarTerms.get(0));
+                chatStateRepository.lastUsedTerm(chatId, similarTerms.get(0));
             }
             String message = "Мы не нашли такого определения. Вы имели ввиду это?\n\n" + similarTerms.get(0);
             for (var i = 1; i < similarTerms.size(); i++) {
@@ -172,7 +207,8 @@ public class BotLogic {
     private String menuToSelectTheMode = "Отправьте:\n" +
             "/help - вернуться меню\n" +
             "/terms - посмотреть какие определения есть у бота\n" +
-            "/check - проверить как хорошо вы знаете определения терминов. Проверка осущестляется в виде флеш-карт.";
+            "/check - проверить как хорошо вы знаете определения терминов. Проверка осущестляется в виде флеш-карт.\n" +
+            "/repeat - повторить термины, которые вы не знали";
 
     private String getDescriptionToBot() {
 
