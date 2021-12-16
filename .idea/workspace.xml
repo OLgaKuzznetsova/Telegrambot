@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9089ebb-ba4d-4173-8f66-7c1333dced2e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BotLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BotLogic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ChatStateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChatStateRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/KeyboardButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/KeyboardButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Response.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BotLogic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BotLogic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/KeyboardButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/KeyboardButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Response.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Response.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
