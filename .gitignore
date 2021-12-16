@@ -3,3 +3,4 @@
 /target/
 target/classes/BotLogic.class
 *.class
+.idea/workspace.xml
