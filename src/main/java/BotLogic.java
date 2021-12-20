@@ -12,6 +12,9 @@ public class BotLogic {
     public Response handleUserInput(long chatId, String userInput) {
 
         if (userInput.equals("/start")) {
+            for (var term : termRepository.getTerms()) {
+                chatStateRepository.changeStateForTerm(chatId, term, ChatStateRepository.TermState.UNUSED);
+            }
             return new Response(mainMenu(), null);
         }
         if (!chatStateRepository.containsChatId(chatId)) {
@@ -36,12 +39,12 @@ public class BotLogic {
             return new Response(menuToSelectTheMode, null);
         }
 
-        if (userInput.equalsIgnoreCase("/see") &
+        if (userInput.equalsIgnoreCase("/see") &&
                 chatStateRepository.getState(chatId) == ChatStateRepository.UserState.CHECK) {
             chatStateRepository.changeState(chatId, ChatStateRepository.UserState.POLL);
             return checkUserForKnowledge(chatId);
         }
-        if (userInput.equalsIgnoreCase("/see") &
+        if (userInput.equalsIgnoreCase("/see") &&
                 chatStateRepository.getState(chatId) == ChatStateRepository.UserState.REPEAT) {
             chatStateRepository.changeState(chatId, ChatStateRepository.UserState.REDIRECT);
             return checkUserForKnowledge(chatId);
@@ -56,7 +59,7 @@ public class BotLogic {
             return menuForRepetitionOfTerms(chatId);
         }
         if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.POLL
-                | chatStateRepository.getState(chatId) == ChatStateRepository.UserState.REDIRECT) {
+                || chatStateRepository.getState(chatId) == ChatStateRepository.UserState.REDIRECT) {
             return changeStateToAnswer(chatId, userInput);
         }
 
@@ -100,6 +103,9 @@ public class BotLogic {
     }
 
     private Response menuForRepetitionOfTerms(long chatId) {
+        var keyboardButtons = new LinkedList<KeyboardButton>();
+        var buttonCheck = new KeyboardButton("изучение терминов", "/check");
+        keyboardButtons.add(buttonCheck);
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.UNLEARNED) {
                 chatStateRepository.lastUsedTerm(chatId, term);
@@ -108,13 +114,9 @@ public class BotLogic {
         }
         for (var term : termRepository.getTerms()) {
             if (chatStateRepository.getStateForTerm(chatId, term) == ChatStateRepository.TermState.LEARNED) {
-                chatStateRepository.lastUsedTerm(chatId, term);
-                return menuForFlashcards(term);
+                return new Response("Вы запомнили термины", keyboardButtons);
             }
         }
-        var keyboardButtons = new LinkedList<KeyboardButton>();
-        var buttonCheck = new KeyboardButton("начать изучение терминов", "/check");
-        keyboardButtons.add(buttonCheck);
         return new Response("Вы еще не выучили ни одного термина", keyboardButtons);
     }
 
@@ -158,14 +160,14 @@ public class BotLogic {
     private String getAnswerToWrongTerm(long chatId, String userInput) {
         var message = "";
         if ((userInput.equalsIgnoreCase("да")
-                | userInput.equalsIgnoreCase("ага")
-                | userInput.equalsIgnoreCase("конечно"))
-                & chatStateRepository.containsAnswerByChatId(chatId)) {
+                || userInput.equalsIgnoreCase("ага")
+                || userInput.equalsIgnoreCase("конечно"))
+                && chatStateRepository.containsAnswerByChatId(chatId)) {
             message = checkUserInput(chatId, chatStateRepository.getLastAnswer(chatId));
             chatStateRepository.deleteLastAnswerByChatId(chatId);
             return message;
         }
-        if ((userInput.equalsIgnoreCase("нет") & chatStateRepository.containsAnswerByChatId(chatId))) {
+        if ((userInput.equalsIgnoreCase("нет") && chatStateRepository.containsAnswerByChatId(chatId))) {
             return "Извините, тогда у нас нет нужного вам термина.\n" +
                     "Попробйте найти другой термин или введите /terms, чтобы узнать какие термины есть в базе нашего бота.";
         }
@@ -205,10 +207,10 @@ public class BotLogic {
             "Введите термин, чтобы узнать его определение\n";
 
     private String menuToSelectTheMode = "Отправьте:\n" +
-            "/help - вернуться меню\n" +
             "/terms - посмотреть какие определения есть у бота\n" +
             "/check - проверить как хорошо вы знаете определения терминов. Проверка осущестляется в виде флеш-карт.\n" +
-            "/repeat - повторить термины, которые вы не знали";
+            "/repeat - повторить термины, которые вы не знали\n" +
+            "/start - перезапустить бота и заново начать обучение";
 
     private String getDescriptionToBot() {
 
