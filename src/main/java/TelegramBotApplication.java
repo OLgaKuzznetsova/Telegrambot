@@ -1,5 +1,6 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -29,10 +30,12 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
         {
             long currentChatId;
             Response response;
+            EditMessageText new_message = new EditMessageText();
 
 
             if (update.hasMessage())
             {
+                new_message = null;
                 var message = update.getMessage();
                 currentChatId = message.getChatId();
 
@@ -43,6 +46,9 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
                 var callbackQuery = update.getCallbackQuery();
                 currentChatId = callbackQuery.getMessage().getChatId();
                 response = bot.handleUserInput(currentChatId, callbackQuery.getData());
+                new_message.setChatId(String.valueOf(currentChatId));
+                new_message.setMessageId(update.getCallbackQuery().getMessage().getMessageId());
+                new_message.setText(response.getMessageText());
             }
             else
             {
@@ -56,7 +62,7 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
                 inlineKeyboard.setKeyboard(setInlineKeyboardMarkup(response.getKeyboardMarkup()));
             }
 
-            sendResponse(currentChatId, response.getMessageText(), inlineKeyboard);
+            sendResponse(currentChatId, response.getMessageText(), inlineKeyboard, new_message);
         }
         catch (Exception e)
         {
@@ -65,25 +71,38 @@ public class TelegramBotApplication extends TelegramLongPollingBot {
     }
 
     private void sendResponse(Long chatId, String msgText,
-                              InlineKeyboardMarkup inlineKeyboard)
+                              InlineKeyboardMarkup inlineKeyboard, EditMessageText new_message)
     {
         var sender = new SendMessage();
         sender.setChatId(chatId.toString());
         sender.setText(msgText);
 
-        if (inlineKeyboard != null)
-        {
-            sender.setReplyMarkup(inlineKeyboard);
+        if (new_message==null) {
+            if (inlineKeyboard != null)
+            {
+                sender.setReplyMarkup(inlineKeyboard);
+            }
+            try
+            {
+                execute(sender);
+            }
+            catch (TelegramApiException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else {
+            if (inlineKeyboard != null)
+            {
+                new_message.setReplyMarkup(inlineKeyboard);
+            }
+            try {
+                execute(new_message);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
         }
 
-        try
-        {
-            execute(sender);
-        }
-        catch (TelegramApiException e)
-        {
-            e.printStackTrace();
-        }
     }
 
     private List<List<InlineKeyboardButton>> setInlineKeyboardMarkup(LinkedList<KeyboardButton> keyboardButtons)
