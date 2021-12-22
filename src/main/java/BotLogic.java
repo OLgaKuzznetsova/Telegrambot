@@ -64,16 +64,16 @@ public class BotLogic {
         }
 
         if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.SEARCH) {
-            return new Response(checkUserInput(chatId, userInput), null);
+            return checkUserInput(chatId, userInput);
         }
 
 
         if (chatStateRepository.getState(chatId) == ChatStateRepository.UserState.ERROR) {
             chatStateRepository.changeState(chatId, ChatStateRepository.UserState.SEARCH);
-            return new Response(getAnswerToWrongTerm(chatId, userInput), null);
+            return getAnswerToWrongTerm(chatId, userInput);
         }
 
-        return new Response("Данные введены неверно", null);
+        return new Response("Данные введены неверно.Возможно, вы находитесь не в том режиме.", null);
     }
 
     private Response menuForCheckingKnowledge(long chatId) {
@@ -157,47 +157,50 @@ public class BotLogic {
 
     }
 
-    private String getAnswerToWrongTerm(long chatId, String userInput) {
-        var message = "";
-        if ((userInput.equalsIgnoreCase("да")
-                || userInput.equalsIgnoreCase("ага")
-                || userInput.equalsIgnoreCase("конечно"))
+    private Response getAnswerToWrongTerm(long chatId, String userInput) {
+        if (userInput.equalsIgnoreCase("да")
                 && chatStateRepository.containsAnswerByChatId(chatId)) {
-            message = checkUserInput(chatId, chatStateRepository.getLastAnswer(chatId));
+            var message = checkUserInput(chatId, chatStateRepository.getLastAnswer(chatId));
             chatStateRepository.deleteLastAnswerByChatId(chatId);
             return message;
         }
         if ((userInput.equalsIgnoreCase("нет") && chatStateRepository.containsAnswerByChatId(chatId))) {
-            return "Извините, тогда у нас нет нужного вам термина.\n" +
-                    "Попробйте найти другой термин или введите /terms, чтобы узнать какие термины есть в базе нашего бота.";
+            return new Response("Извините, тогда у нас нет нужного вам термина.\n" +
+                    "Попробйте найти другой термин или введите /terms, чтобы узнать какие термины есть в базе нашего бота.", null);
         }
         return checkUserInput(chatId, userInput);
 
     }
 
-    private String checkUserInput(long chatId, String userInput) {
+    private Response checkUserInput(long chatId, String userInput) {
         if (userInput.matches("[а-яА-ЯёЁ ]+")) {
             return getDefinitionToTerm(chatId, userInput);
         }
-        return "Данные введены неверно. Если вы забыли как пользоваться ботом введите /help";
+        return new Response("Данные введены неверно. Если вы забыли как пользоваться ботом введите /help", null);
     }
 
-    private String getDefinitionToTerm(long chatId, String userInput) {
+    private Response getDefinitionToTerm(long chatId, String userInput) {
         var res = termRepository.getDefinitionToTerm(userInput);
         if (res == null) {
+            var keyboardButtons = new LinkedList<KeyboardButton>();
             chatStateRepository.changeState(chatId, ChatStateRepository.UserState.ERROR);
             var similarTerms = termRepository.getSimilarTerms(userInput);
-            if (similarTerms.size() == 1) {
-                chatStateRepository.lastUsedTerm(chatId, similarTerms.get(0));
-            }
             String message = "Мы не нашли такого определения. Вы имели ввиду это?\n\n" + similarTerms.get(0);
             for (var i = 1; i < similarTerms.size(); i++) {
                 message = message + ", " + similarTerms.get(i);
 
             }
-            return message;
+            if (similarTerms.size() == 1) {
+                chatStateRepository.lastUsedTerm(chatId, similarTerms.get(0));
+                var buttonYes = new KeyboardButton("да", "да");
+                keyboardButtons.add(buttonYes);
+                var buttonNo = new KeyboardButton("нет", "нет");
+                keyboardButtons.add(buttonNo);
+                return new Response(message, keyboardButtons);
+            }
+            return new Response(message, null);
         } else {
-            return res[0] + " - " + res[1];
+            return new Response(res[0] + " - " + res[1], null);
         }
     }
 
